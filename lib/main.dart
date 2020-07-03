@@ -10,6 +10,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: new ThemeData(
+        primaryColor: Colors.indigo,
+        secondaryHeaderColor: Colors.black
+      ),
       home: SplashScreen(),
     );
   }
