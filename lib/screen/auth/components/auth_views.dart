@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/style.dart';
 
 class AuthViews extends StatefulWidget {
@@ -11,6 +12,8 @@ class AuthViews extends StatefulWidget {
 }
 
 class _AuthViewsState extends State<AuthViews> {
+  FirebaseRepository firebaseRepository = new FirebaseRepository();
+
   @override
   Widget build(BuildContext context) {
     return body(context);
@@ -23,7 +26,17 @@ class _AuthViewsState extends State<AuthViews> {
   }
 
   Widget loginView() {
+
+    // Controller for field username and password
+    final TextEditingController usernameController = new TextEditingController();
+    final TextEditingController passwordController = new TextEditingController();
+
+    // Form key
+    Key formState;
+
+    // Return Form widget
     return Form(
+      key: formState,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -38,6 +51,7 @@ class _AuthViewsState extends State<AuthViews> {
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8),
             child: new TextFormField(
+              controller: usernameController,
               cursorColor: Colors.deepOrange,
               decoration: InputDecoration(
                   border: OutlineInputBorder(borderSide: BorderSide()),
@@ -50,6 +64,7 @@ class _AuthViewsState extends State<AuthViews> {
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
             child: new TextFormField(
+              controller: passwordController,
               cursorColor: Colors.deepOrange,
               obscureText: true,
               decoration: InputDecoration(
@@ -71,7 +86,12 @@ class _AuthViewsState extends State<AuthViews> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)
                     ),
-                    onPressed: () => print("Sign In User"),
+                    onPressed: () {
+                      firebaseRepository.loginUser(
+                        email: usernameController.text,
+                        password: passwordController.text
+                      );
+                    },
                     child: new Text(
                       "Sign In",
                       style: TextStyle(color: Colors.white),
@@ -89,6 +109,11 @@ class _AuthViewsState extends State<AuthViews> {
   }
 
   Widget signUpView() {
+    final TextEditingController firstNameController = new TextEditingController();
+    final TextEditingController lastNameController = new TextEditingController();
+    final TextEditingController emailController = new TextEditingController();
+    final TextEditingController passwordController = new TextEditingController();
+
     return Form(
       child: Column(
         children: <Widget>[
@@ -103,6 +128,7 @@ class _AuthViewsState extends State<AuthViews> {
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
             child: new TextFormField(
+              controller: firstNameController,
               cursorColor: Colors.deepOrange,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -114,6 +140,7 @@ class _AuthViewsState extends State<AuthViews> {
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
             child: new TextFormField(
+              controller: lastNameController,
               cursorColor: Colors.deepOrange,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -126,6 +153,7 @@ class _AuthViewsState extends State<AuthViews> {
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
             child: new TextFormField(
               cursorColor: Colors.deepOrange,
+              controller: emailController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "someone@gmail.com",
@@ -139,6 +167,7 @@ class _AuthViewsState extends State<AuthViews> {
             child: new TextFormField(
               cursorColor: Colors.deepOrange,
               obscureText: true,
+              controller: passwordController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Password",
@@ -155,7 +184,14 @@ class _AuthViewsState extends State<AuthViews> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)
                 ),
-                onPressed: () => print("Sign In User"),
+                onPressed: () async {
+                  await firebaseRepository.registerUser(
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text,
+                      email: emailController.text,
+                      password: passwordController.text);
+                  print("Registered");
+                },
                 child: new Text(
                   "Submit",
                   style: TextStyle(color: Colors.white),
