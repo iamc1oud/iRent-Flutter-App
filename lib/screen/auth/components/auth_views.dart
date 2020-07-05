@@ -14,6 +14,17 @@ class AuthViews extends StatefulWidget {
 class _AuthViewsState extends State<AuthViews> {
   FirebaseRepository firebaseRepository = new FirebaseRepository();
 
+  // Login controllers
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+  // Signup controllers
+  final TextEditingController firstNameController = new TextEditingController();
+  final TextEditingController lastNameController = new TextEditingController();
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordSignUpController = new TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return body(context);
@@ -21,98 +32,92 @@ class _AuthViewsState extends State<AuthViews> {
 
   Widget body(context) {
     return ListView(
-      children: <Widget>[widget.signup ? signUpView() : loginView()],
+      children: <Widget>[widget.signup ? signUpView(context) : loginView(context)],
     );
   }
 
-  Widget loginView() {
+  Widget loginView(BuildContext ctx) {
+    firebaseRepository.setContext(ctx);
 
     // Controller for field username and password
-    final TextEditingController usernameController = new TextEditingController();
-    final TextEditingController passwordController = new TextEditingController();
-
-    // Form key
-    Key formState;
 
     // Return Form widget
-    return Form(
-      key: formState,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top:26.0, bottom: 8),
-            child: new Text(
-              "Welcome",
-              style:
-                  TextStyle(fontSize: 30, color: AppStyle().secondaryTextColor),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(top:26.0, bottom: 8),
+          child: new Text(
+            "Welcome",
+            style:
+                TextStyle(fontSize: 30, color: AppStyle().secondaryTextColor),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8),
-            child: new TextFormField(
-              controller: usernameController,
-              cursorColor: Colors.deepOrange,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide()),
-                  hintText: "someone@gmail.com",
-                  labelText: "Email",
-                  alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(8.0)),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8),
+          child: new TextFormField(
+            controller: usernameController,
+            cursorColor: Colors.deepOrange,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(borderSide: BorderSide()),
+                hintText: "someone@gmail.com",
+                labelText: "Email",
+                alignLabelWithHint: true,
+                contentPadding: EdgeInsets.all(8.0)),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
-            child: new TextFormField(
-              controller: passwordController,
-              cursorColor: Colors.deepOrange,
-              obscureText: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide()),
-                  labelText: "Password",
-                  alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(8.0)),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
+          child: new TextFormField(
+            controller: passwordController,
+            cursorColor: Colors.deepOrange,
+            obscureText: true,
+            decoration: InputDecoration(
+                border: OutlineInputBorder(borderSide: BorderSide()),
+                labelText: "Password",
+                alignLabelWithHint: true,
+                contentPadding: EdgeInsets.all(8.0)),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: 200,
-                  child: new RaisedButton(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    onPressed: () {
-                      firebaseRepository.loginUser(
-                        email: usernameController.text,
-                        password: passwordController.text
-                      );
-                    },
-                    child: new Text(
-                      "Sign In",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: AppStyle().secondaryTextColor,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              SizedBox(
+                width: 200,
+                child: new RaisedButton(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
                   ),
+                  onPressed: () async{
+                    await firebaseRepository.loginUser(
+                      email: usernameController.text,
+                      password: passwordController.text
+                    );
+
+                      // Navigate to homescreen
+                      //Navigator.pushReplacementNamed(context, "/homescreen");
+
+                  },
+                  child: new Text(
+                    "Sign In",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: AppStyle().secondaryTextColor,
                 ),
-                new Text("Forgot password?"),
-              ],
-            ),
+              ),
+              new Text("Forgot password?"),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget signUpView() {
-    final TextEditingController firstNameController = new TextEditingController();
-    final TextEditingController lastNameController = new TextEditingController();
-    final TextEditingController emailController = new TextEditingController();
-    final TextEditingController passwordController = new TextEditingController();
+  Widget signUpView(BuildContext ctx) {
+    firebaseRepository.setContext(ctx);
 
     return Form(
       child: Column(
@@ -167,7 +172,7 @@ class _AuthViewsState extends State<AuthViews> {
             child: new TextFormField(
               cursorColor: Colors.deepOrange,
               obscureText: true,
-              controller: passwordController,
+              controller: passwordSignUpController,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Password",
@@ -189,7 +194,7 @@ class _AuthViewsState extends State<AuthViews> {
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       email: emailController.text,
-                      password: passwordController.text);
+                      password: passwordSignUpController.text);
                   print("Registered");
                 },
                 child: new Text(

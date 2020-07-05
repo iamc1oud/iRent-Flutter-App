@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore:
   flare_flutter:
   firebase_auth:
+  fluttertoast: ^5.0.1
 
 dev_dependencies:
   flutter_test:

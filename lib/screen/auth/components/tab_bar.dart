@@ -39,7 +39,7 @@ class TabBarComponent extends StatelessWidget {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(.1),
+          color: Colors.black.withOpacity(0.25),
           blurRadius: 16,
           offset: Offset(0, 4),
         )
