@@ -12,10 +12,15 @@ import 'package:rent_app/style.dart';
 
 class FirebaseRepository extends FirebaseHandlers {
   static FirebaseAuth firebaseAuth;
+  static FirebaseUser currentUser;
   BuildContext context;
 
   FirebaseRepository() {
     firebaseAuth = FirebaseAuth.instance;
+  }
+
+  FirebaseAuth getFirebaseAuthInstance(){
+      return firebaseAuth;
   }
 
   void setContext(BuildContext context){
@@ -36,6 +41,7 @@ class FirebaseRepository extends FirebaseHandlers {
     try {
       AuthResult authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+       currentUser = authResult.user;
     }
     catch (e){
       switch(e.code){

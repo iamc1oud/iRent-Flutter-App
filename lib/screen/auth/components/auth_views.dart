@@ -22,8 +22,9 @@ class _AuthViewsState extends State<AuthViews> {
   final TextEditingController firstNameController = new TextEditingController();
   final TextEditingController lastNameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordSignUpController = new TextEditingController();
-
+  final TextEditingController passwordSignUpController =
+      new TextEditingController();
+  String _userStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,9 @@ class _AuthViewsState extends State<AuthViews> {
 
   Widget body(context) {
     return ListView(
-      children: <Widget>[widget.signup ? signUpView(context) : loginView(context)],
+      children: <Widget>[
+        widget.signup ? signUpView(context) : loginView(context)
+      ],
     );
   }
 
@@ -46,7 +49,7 @@ class _AuthViewsState extends State<AuthViews> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top:26.0, bottom: 8),
+          padding: const EdgeInsets.only(top: 26.0, bottom: 8),
           child: new Text(
             "Welcome",
             style:
@@ -89,17 +92,14 @@ class _AuthViewsState extends State<AuthViews> {
                 child: new RaisedButton(
                   elevation: 0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  onPressed: () async{
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () async {
                     await firebaseRepository.loginUser(
-                      email: usernameController.text,
-                      password: passwordController.text
-                    );
+                        email: usernameController.text,
+                        password: passwordController.text);
 
-                      // Navigate to homescreen
-                      //Navigator.pushReplacementNamed(context, "/homescreen");
-
+                    // Navigate to homescreen
+                    //Navigator.pushReplacementNamed(context, "/homescreen");
                   },
                   child: new Text(
                     "Sign In",
@@ -181,21 +181,61 @@ class _AuthViewsState extends State<AuthViews> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 18),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: ListTile(
+                    title: const Text('Landlord'),
+                    leading: Radio(
+                      groupValue: _userStatus,
+                      value: "user_landlord",
+                      onChanged: (value) {
+                        setState(() {
+                          _userStatus = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: ListTile(
+                    title: const Text('Guest'),
+                    leading: Radio(
+                      groupValue: _userStatus,
+                      value: "user_guest",
+                      onChanged: (value) {
+                        setState(() {
+                          _userStatus = value;
+                        });
+
+                        print(value);
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox(
               width: 200,
               child: new RaisedButton(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                    borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
                   await firebaseRepository.registerUser(
                       firstName: firstNameController.text,
                       lastName: lastNameController.text,
                       email: emailController.text,
                       password: passwordSignUpController.text);
-                  print("Registered");
                 },
                 child: new Text(
                   "Submit",
