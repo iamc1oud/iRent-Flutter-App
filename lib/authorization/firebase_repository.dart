@@ -13,6 +13,7 @@ import 'package:rent_app/style.dart';
 class FirebaseRepository extends FirebaseHandlers {
   static FirebaseAuth firebaseAuth;
   static FirebaseUser currentUser;
+  static Firestore _firestore = Firestore.instance;
   BuildContext context;
 
   FirebaseRepository() {
@@ -69,11 +70,12 @@ class FirebaseRepository extends FirebaseHandlers {
   }
 
   @override
-  Future<void> registerUser(
+  Future<FirebaseUser> registerUser(
       {String firstName,
       String lastName,
       String email,
-      String password}) async {
+      String password,
+      String isOwnerorGuest}) async {
     /*`ERROR_WEAK_PASSWORD` - If the password is not strong enough.
     `ERROR_INVALID_EMAIL` - If the email address is malformed.
     `ERROR_EMAIL_ALREADY_IN_USE` - If the email is already in use by a different account.*/
@@ -88,6 +90,7 @@ class FirebaseRepository extends FirebaseHandlers {
       - Firstname
       - Lastname
       - Email
+      - Owner/ Guest
 
       If exisiting user tries to re-register, it will throw error, no
       new data will be updated to firebase
@@ -97,8 +100,10 @@ class FirebaseRepository extends FirebaseHandlers {
         "firstname": firstName,
         "lastname": lastName,
         "email": email,
-        "uid": user.uid
+        "uid": user.uid,
+        "isOwnerOrGuest" : isOwnerorGuest
       });
+      return user;
 
     } catch (e) {
       switch (e.code) {
@@ -121,5 +126,10 @@ class FirebaseRepository extends FirebaseHandlers {
           break;
       }
     }
+  }
+
+  @override
+  Stream findIdentityOfUser({String email}) {
+    return _firestore.collection("user").where("email", isEqualTo: email).snapshots();
   }
 }
