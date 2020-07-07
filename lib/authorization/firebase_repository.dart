@@ -28,7 +28,7 @@ class FirebaseRepository extends FirebaseHandlers {
   }
 
   @override
-  Future<void> loginUser({String email, String password}) async {
+  Future<FirebaseUser> loginUser({String email, String password}) async {
     bool successfulLogin = false;
 
     /*`ERROR_INVALID_EMAIL` - If the email address is malformed.
@@ -42,6 +42,7 @@ class FirebaseRepository extends FirebaseHandlers {
       AuthResult authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
        currentUser = authResult.user;
+       return currentUser;
     }
     catch (e){
       switch(e.code){

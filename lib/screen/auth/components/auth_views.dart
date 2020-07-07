@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
+import 'package:rent_app/screen/homescreen/home.dart';
 import 'package:rent_app/style.dart';
 
 class AuthViews extends StatefulWidget {
@@ -94,10 +95,20 @@ class _AuthViewsState extends State<AuthViews> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
-                    await firebaseRepository.loginUser(
+                    var user = await firebaseRepository.loginUser(
                         email: usernameController.text,
                         password: passwordController.text);
+                    if(user!= null){
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                          user: user,
+                        )
+                      ));
 
+                    }
+                    else {
+                      print("Could not sign in");
+                    }
                     // Navigate to homescreen
                     //Navigator.pushReplacementNamed(context, "/homescreen");
                   },
