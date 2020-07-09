@@ -34,6 +34,12 @@ dependencies:
   flare_flutter:
   firebase_auth:
   fluttertoast: ^5.0.1
+  christian_picker_image: ^0.1.7
+  cached_network_image: ^2.2.0+1
+  flutter_map:
+  user_location:
+  geolocator: ^5.3.2+2
+
 
 dev_dependencies:
   flutter_test:
