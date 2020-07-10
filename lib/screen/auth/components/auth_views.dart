@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/screen/guest/guest_home.dart';
 import 'package:rent_app/screen/homescreen/home.dart';
-import 'package:rent_app/screen/owner/owner_home.dart';
+import 'package:rent_app/screen/owner/owner_info_register.dart';
 import 'package:rent_app/style.dart';
 
 class AuthViews extends StatefulWidget {
@@ -112,7 +112,7 @@ class _AuthViewsState extends State<AuthViews> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OwnerHomeScreen(userData: event.documents[0].data,)
+                                  builder: (context) => OwnerInfoRegisterScreen(userData: event.documents[0].data,)
                               ));
                         } else {
                           Navigator.push(
@@ -267,7 +267,7 @@ class _AuthViewsState extends State<AuthViews> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => OwnerHomeScreen()));
+                            builder: (context) => OwnerInfoRegisterScreen()));
                   } else if (user != null && _userStatus == "user_guest") {
                     Navigator.push(
                         context,

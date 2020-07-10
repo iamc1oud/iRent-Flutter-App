@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:user_location/user_location.dart';
 
 class MapBoxScreen extends StatefulWidget {
+  final Position userPosition;
+
+  const MapBoxScreen({Key key, this.userPosition}) : super(key: key);
+
   @override
   _MapBoxScreenState createState() => _MapBoxScreenState();
 }
@@ -14,21 +19,20 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     userLocationOptions = UserLocationOptions(
         showMoveToCurrentLocationFloatingActionButton: false,
         updateMapLocationOnPositionChange: false,
         context: context,
         zoomToCurrentLocationOnLoad: true,
         mapController: mapController,
-        markers: markers,
-        verbose: true);
+        markers: markers);
+
     return new FlutterMap(
       options: new MapOptions(minZoom: 5.0, maxZoom: 15.0, plugins: [UserLocationPlugin()]),
       layers: [
@@ -38,8 +42,9 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
             'accessToken': 'sk.eyJ1IjoiY2xvdWRtYXgiLCJhIjoiY2s3YzJzdnN5MGlxMzNxbXJkZXJ0N3RvYyJ9.CwnAoKlXU6qiva_nqqT1mA',
             'id': 'mapbox.mapbox-streets-v7'
           },
+
         ),
-        MarkerLayerOptions(markers: markers),
+        MarkerLayerOptions(markers: markers,),
         userLocationOptions
       ],
       mapController: mapController,
