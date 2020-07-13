@@ -26,8 +26,7 @@ class _AuthViewsState extends State<AuthViews> {
   final TextEditingController firstNameController = new TextEditingController();
   final TextEditingController lastNameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordSignUpController =
-      new TextEditingController();
+  final TextEditingController passwordSignUpController = new TextEditingController();
   String _userStatus;
 
   @override
@@ -37,9 +36,7 @@ class _AuthViewsState extends State<AuthViews> {
 
   Widget body(context) {
     return ListView(
-      children: <Widget>[
-        widget.signup ? signUpView(context) : loginView(context)
-      ],
+      children: <Widget>[widget.signup ? signUpView(context) : loginView(context)],
     );
   }
 
@@ -56,8 +53,11 @@ class _AuthViewsState extends State<AuthViews> {
           padding: const EdgeInsets.only(top: 26.0, bottom: 8),
           child: new Text(
             "Welcome",
-            style:
-                TextStyle(fontSize: 30, color: AppStyle().secondaryTextColor),
+            style: TextStyle(
+              fontSize: 30,
+              color: AppStyle().secondaryTextColor,
+              fontFamily: "RobotoSlab",
+            ),
           ),
         ),
         Padding(
@@ -95,30 +95,25 @@ class _AuthViewsState extends State<AuthViews> {
                 width: 200,
                 child: new RaisedButton(
                   elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
                     var user = await firebaseRepository.loginUser(
-                        email: usernameController.text,
-                        password: passwordController.text);
+                        email: usernameController.text, password: passwordController.text);
                     if (user != null) {
                       // Find user in user collection
-                      Stream<QuerySnapshot> identity = firebaseRepository
-                          .findIdentityOfUser(email: usernameController.text);
+                      Stream<QuerySnapshot> identity =
+                          firebaseRepository.findIdentityOfUser(email: usernameController.text);
 
                       identity.listen((event) {
-                        if (event.documents[0].data["isOwnerOrGuest"] ==
-                            "user_landlord") {
+                        if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OwnerInfoRegisterScreen(userData: event.documents[0].data,)
-                              ));
+                                  builder: (context) => OwnerInfoRegisterScreen(
+                                        userData: event.documents[0].data,
+                                      )));
                         } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GuestHomeScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => GuestHomeScreen()));
                         }
                       });
                     } else {
@@ -152,8 +147,7 @@ class _AuthViewsState extends State<AuthViews> {
             padding: const EdgeInsets.only(top: 26, bottom: 8),
             child: new Text(
               "Create account",
-              style:
-                  TextStyle(fontSize: 30, color: AppStyle().secondaryTextColor),
+              style: TextStyle(fontFamily: "RobotoSlab", fontSize: 30, color: AppStyle().secondaryTextColor),
             ),
           ),
           Padding(
@@ -253,8 +247,7 @@ class _AuthViewsState extends State<AuthViews> {
               width: 200,
               child: new RaisedButton(
                 elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
                   var user = await firebaseRepository.registerUser(
                       firstName: firstNameController.text,
@@ -264,15 +257,9 @@ class _AuthViewsState extends State<AuthViews> {
                       isOwnerorGuest: _userStatus);
 
                   if (user != null && _userStatus == "user_landlord") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnerInfoRegisterScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerInfoRegisterScreen()));
                   } else if (user != null && _userStatus == "user_guest") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GuestHomeScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => GuestHomeScreen()));
                   }
                 },
                 child: new Text(

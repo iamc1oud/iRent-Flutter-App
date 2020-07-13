@@ -41,6 +41,7 @@ dependencies:
   geolocator: ^5.3.2+2
   flutter_map_marker_popup: ^0.1.4
   flutter_staggered_grid_view: "^0.2.7"
+  firebase_storage: ^3.1.6
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/flare_animations/house.flr
+    - assets/loading/loader.gif
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

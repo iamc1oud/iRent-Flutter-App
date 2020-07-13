@@ -16,8 +16,7 @@ class OwnerInfoRegisterScreen extends StatefulWidget {
   const OwnerInfoRegisterScreen({Key key, this.userData}) : super(key: key);
 
   @override
-  _OwnerInfoRegisterScreenState createState() =>
-      _OwnerInfoRegisterScreenState();
+  _OwnerInfoRegisterScreenState createState() => _OwnerInfoRegisterScreenState();
 }
 
 class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
@@ -28,6 +27,11 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
 
   GeolocatorProvider geolocatorProvider = new GeolocatorProvider();
   Map<String, dynamic> locationData;
+  bool isLocationLoading = true;
+  Color fabColor = Color(0xFFFF2366);
+  bool fabVisible = false;
+
+  PageController pageController = new PageController(viewportFraction: 0.9);
 
   // Store current position of user during registration
   Position currentPosition;
@@ -80,6 +84,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
     var locationInfo = await geolocatorProvider.getCurrentPositionPlacemark();
     setState(() {
       locationData = locationInfo;
+      isLocationLoading = false;
     });
   }
 
@@ -88,33 +93,25 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
     return Scaffold(
       appBar: PreferredSize(
           child: Container(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(left: 30.0),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
               child: new Row(
                 children: <Widget>[
                   Expanded(
                     child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         RichText(
                           text: TextSpan(children: [
                             TextSpan(
-                                text: "Welcome,",
+                                text: "Profile",
                                 style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 35,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "RobotoSlab",
-                                    color: Colors.indigo)),
-                            TextSpan(
-                                text: " ${widget.userData["firstname"]}",
-                                style: TextStyle(
-                                    fontSize: 26,
-                                    fontFamily: "RobotoSlab",
-                                    color: Colors.indigo))
+                                    color: Colors.black)),
                           ]),
                         ),
                       ],
@@ -123,37 +120,63 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                 ],
               )),
           preferredSize: Size.fromHeight(70)),
-      body: PageView(
-        pageSnapping: true,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                    color: Colors.white70, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5)
-                ]),
-                child: uploadProfilePictureWidget()),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white70, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5)
-                ]),
-                child: uploadHomeImages()),
-          )
-        ],
-      ),
+      body: isLocationLoading
+          ? Center(
+              child: new FittedBox(
+                child: Image.asset(
+                  "assets/loading/loader.gif",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : PageView(
+              controller: pageController,
+              physics: BouncingScrollPhysics(),
+              onPageChanged: (position) {
+                if (position == 1) {
+                  setState(() {
+                    fabVisible = true;
+                    fabColor = Color(0xFF006AAE);
+                  });
+                } else {
+                  setState(() {
+                    fabVisible = false;
+                    fabColor = Color(0xFFFF2366);
+                  });
+                }
+              },
+              pageSnapping: true,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFFFF2366),
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
+                      child: uploadProfilePictureWidget()),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFF006AAE),
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
+                      child: uploadHomeImages()),
+                )
+              ],
+            ),
+      floatingActionButton: fabVisible
+          ? new FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: fabColor,
+              elevation: 10,
+              child: Icon(Icons.arrow_forward_ios, color: Colors.white),
+            )
+          : SizedBox(),
     );
   }
 
@@ -161,53 +184,62 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(24.0),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           _pickHomeImage(context);
           print(homeImages);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Text("Upload five pictures of residence", style: AppTextStyle().cardHeadingPrimaryStyle,),
+            new Text(
+              "Residence picture",
+              style: AppTextStyle().cardHeadingPrimaryStyle,
+            ),
             homeImageUploaded
                 ? Expanded(
-                  child: GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              children: homeImages.map((e) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new Container(
-                    height: size.height * 0.25,
-                    width: size.width * 0.33,
-                    child: ClipRRect(
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                      children: homeImages
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: new Container(
+                                  height: size.height * 0.25,
+                                  width: size.width * 0.33,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: FittedBox(fit: BoxFit.cover, child: Image.file(e)),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      elevation: 5,
                       borderRadius: BorderRadius.circular(20),
-                      child: FittedBox(
-                          fit: BoxFit.cover, child: Image.file(e)),
-                    ),
-                ),
-              )).toList(),
-            ),
-                )
-                : new Container(
-                    height: size.height * 0.25,
-                    width: size.width * 0.33,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        new Icon(
-                          Icons.photo_camera,
-                          color: Colors.white,
+                      child: new Container(
+                        height: size.height * 0.25,
+                        width: size.width * 0.33,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Icon(
+                              Icons.photo_camera,
+                              color: Colors.white,
+                            ),
+                            new Text(
+                              "Upload picture",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
                         ),
-                        new Text(
-                          "Upload picture",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ],
+                        decoration: BoxDecoration(color: Color(0xFF006AAE), borderRadius: BorderRadius.circular(20)),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                        color: Colors.indigo,
-                        borderRadius: BorderRadius.circular(20)),
                   ),
           ],
         ),
@@ -218,12 +250,10 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
   Widget uploadProfilePictureWidget() {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.all(24.0),
+      child: ListView(
         children: <Widget>[
-          new Text("Upload profile picture",
-              style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Upload profile picture", style: AppTextStyle().cardHeadingPrimaryStyle),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
@@ -236,34 +266,35 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       width: size.width * 0.33,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: FittedBox(
-                            fit: BoxFit.cover, child: Image.file(images[0])),
+                        child: FittedBox(fit: BoxFit.cover, child: Image.file(images[0])),
                       ),
                     )
-                  : new Container(
-                      height: size.height * 0.25,
-                      width: size.width * 0.33,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Icon(
-                            Icons.photo_camera,
-                            color: Colors.white,
-                          ),
-                          new Text(
-                            "Upload picture",
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ],
+                  : Material(
+                      borderRadius: BorderRadius.circular(20),
+                      elevation: 5,
+                      shadowColor: Colors.pink,
+                      child: new Container(
+                        height: size.height * 0.25,
+                        width: size.width * 0.33,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            new Icon(
+                              Icons.photo_camera,
+                              color: Colors.white,
+                            ),
+                            new Text(
+                              "Upload picture",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(color: Color(0xFFFF2366), borderRadius: BorderRadius.circular(20)),
                       ),
-                      decoration: BoxDecoration(
-                          color: Colors.indigo,
-                          borderRadius: BorderRadius.circular(20)),
                     ),
             ),
           ),
-          new Text("Your current location",
-              style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Current location", style: AppTextStyle().cardHeadingPrimaryStyle),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -273,22 +304,46 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text("Country: " + locationData["isoCountryCode"]),
                       new Text(
-                          "Sublocality: " + locationData["subLocality"] == ""
-                              ? "Not avaiable"
-                              : locationData["subLocality"]),
-                      new Text("Locality: " + locationData["locality"]),
-                      new Text("Latitude: " +
-                          locationData["position"]["latitude"].toString()),
-                      new Text("Longitude: " +
-                          locationData["position"]["longitude"].toString()),
+                        "Country: " + locationData["isoCountryCode"],
+                        style: AppTextStyle().whiteTextColor,
+                      ),
+                      new Text(
+                        "Sublocality: " + locationData["subLocality"] == ""
+                            ? "Not avaiable"
+                            : locationData["subLocality"],
+                        style: AppTextStyle().whiteTextColor,
+                      ),
+                      new Text(
+                        "Locality: " + locationData["locality"],
+                        style: AppTextStyle().whiteTextColor,
+                      ),
+                      new Text(
+                        "Latitude: " + locationData["position"]["latitude"].toString(),
+                        style: AppTextStyle().whiteTextColor,
+                      ),
+                      new Text(
+                        "Longitude: " + locationData["position"]["longitude"].toString(),
+                        style: AppTextStyle().whiteTextColor,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(20),
+              clipBehavior: Clip.antiAlias,
+              elevation: 5,
+              child: Container(
+                height: 200,
+                child: MapBoxScreen(),
+              ),
+            ),
+          )
         ],
       ),
     );
