@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:christian_picker_image/christian_picker_image.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,6 +14,7 @@ class OwnerInfoRegisterScreen extends StatefulWidget {
   // Store user collection data for logged in user
   final Map<String, dynamic> userData;
 
+
   const OwnerInfoRegisterScreen({Key key, this.userData}) : super(key: key);
 
   @override
@@ -24,6 +26,9 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
   bool homeImageUploaded = false;
   List<File> images;
   List<File> homeImages;
+  Map<String, dynamic> profileInfo = {
+   "empty" : 1
+  };
 
   GeolocatorProvider geolocatorProvider = new GeolocatorProvider();
   Map<String, dynamic> locationData;
@@ -31,6 +36,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
   Color fabColor = Color(0xFFFF2366);
   bool fabVisible = false;
 
+  // Page controller for profile setup process
   PageController pageController = new PageController(viewportFraction: 0.9);
 
   // Store current position of user during registration
@@ -171,7 +177,11 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
             ),
       floatingActionButton: fabVisible
           ? new FloatingActionButton(
-              onPressed: () {},
+              onPressed: () async{
+                StorageReference storageReference = FirebaseStorage().ref().child("rentAppUserProfilePic/${widget.userData["uid"]}_profile_pic.png");
+                StorageUploadTask uploadTask = storageReference.putFile(images[0]);
+                StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+              },
               backgroundColor: fabColor,
               elevation: 10,
               child: Icon(Icons.arrow_forward_ios, color: Colors.white),
