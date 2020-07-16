@@ -101,7 +101,8 @@ class FirebaseRepository extends FirebaseHandlers {
         "lastname": lastName,
         "email": email,
         "uid": user.uid,
-        "isOwnerOrGuest" : isOwnerorGuest
+        "isOwnerOrGuest" : isOwnerorGuest,
+        "isRegistered" : false
       });
       return user;
 
