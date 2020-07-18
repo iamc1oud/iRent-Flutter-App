@@ -6,8 +6,7 @@ import 'package:rent_app/utils/owner_firebase_interface.dart';
 
 class OwnerFirebaseOperation extends OwnerFirebaseInterface {
   @override
-  Future<void> updateRegistrationProfile(
-      Map<String, dynamic> userRegistrationData, String userUid) async {
+  Future<void> updateRegistrationProfile(Map<String, dynamic> userRegistrationData, String userUid) async {
     // Find document for current userUid
     try {
       await Firestore.instance
@@ -24,8 +23,7 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
           }
         });
       });
-    }
-    catch (e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -33,11 +31,19 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
   @override
   Future<String> profilePictureUrl(File profileImage, String userUid) async {
     // Profile url is generated after uploading to firebase storage
-    StorageReference storageReference = FirebaseStorage()
-        .ref()
-        .child("rentAppUserProfilePic/${userUid}_profile_pic.png");
+    StorageReference storageReference =
+        FirebaseStorage().ref().child("rentAppUserProfilePic/${userUid}_profile_pic.png");
     StorageUploadTask uploadTask = storageReference.putFile(profileImage);
     StorageTaskSnapshot snapshot = await uploadTask.onComplete;
     return snapshot.storageMetadata.path;
+  }
+
+  @override
+  Future<String> getDownloadUrlProfilePicture(String userUid) async {
+    StorageReference storageReference =
+        FirebaseStorage().ref().child("rentAppUserProfilePic/${userUid}_profile_pic.png");
+
+    var link = await storageReference.getDownloadURL();
+    return link;
   }
 }

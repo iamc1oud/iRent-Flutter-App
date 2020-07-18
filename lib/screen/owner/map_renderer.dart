@@ -22,7 +22,6 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -31,9 +30,8 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     userLocationOptions = UserLocationOptions(
-        showMoveToCurrentLocationFloatingActionButton: false,
+        showMoveToCurrentLocationFloatingActionButton: true,
         updateMapLocationOnPositionChange: false,
         context: context,
         zoomToCurrentLocationOnLoad: true,
@@ -49,9 +47,10 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
             'accessToken': 'sk.eyJ1IjoiY2xvdWRtYXgiLCJhIjoiY2s3YzJzdnN5MGlxMzNxbXJkZXJ0N3RvYyJ9.CwnAoKlXU6qiva_nqqT1mA',
             'id': 'mapbox.mapbox-streets-v7'
           },
-
         ),
-        MarkerLayerOptions(markers: markers,),
+        MarkerLayerOptions(
+          markers: markers,
+        ),
         userLocationOptions
       ],
       mapController: mapController,
@@ -65,5 +64,5 @@ class MapStyles {
   static const String darkTheme =
       "https://api.mapbox.com/styles/v1/cloudmax/ck7c2vd9t03j31iqura6hp5p4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiY2xvdWRtYXgiLCJhIjoiY2pxbWE4OXlmMHhrbTQzbGY0ZDB6OTBrdyJ9.4TILrjtq1v5eCmMwsbbotQ";
 
-  static const String currentTheme = darkTheme;
+  static const String currentTheme = lightTheme;
 }

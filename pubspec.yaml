@@ -42,6 +42,10 @@ dependencies:
   flutter_map_marker_popup: ^0.1.4
   flutter_staggered_grid_view: "^0.2.7"
   firebase_storage: ^3.1.6
+  persistent_bottom_nav_bar: ^2.0.5
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  shimmer:
 
 dev_dependencies:
   flutter_test:

@@ -20,8 +20,7 @@ class OwnerInfoRegisterScreen extends StatefulWidget {
   const OwnerInfoRegisterScreen({Key key, this.userData}) : super(key: key);
 
   @override
-  _OwnerInfoRegisterScreenState createState() =>
-      _OwnerInfoRegisterScreenState();
+  _OwnerInfoRegisterScreenState createState() => _OwnerInfoRegisterScreenState();
 }
 
 class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
@@ -56,9 +55,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
     homeImages = await ChristianPickerImage.pickImages(maxImages: 5);
 
     setState(() {
-      homeImages.length != 0
-          ? homeImageUploaded = true
-          : homeImageUploaded = false;
+      homeImages.length != 0 ? homeImageUploaded = true : homeImageUploaded = false;
     });
     Navigator.of(context).pop();
   }
@@ -105,9 +102,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
           child: Container(
               padding: EdgeInsets.only(left: 30.0),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
               child: new Row(
                 children: <Widget>[
                   Expanded(
@@ -166,12 +161,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Color(0xFFFF2366),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 5)
-                          ]),
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
                       child: uploadProfilePictureWidget()),
                 ),
                 Padding(
@@ -181,12 +171,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Color(0xFF006AAE),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 2,
-                                blurRadius: 5)
-                          ]),
+                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
                       child: uploadHomeImages()),
                 )
               ],
@@ -194,8 +179,9 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
       floatingActionButton: fabVisible
           ? new FloatingActionButton(
               onPressed: () async {
-                String profileUrl = await ownerFirebaseOperation
-                    .profilePictureUrl(images[0], widget.userData["uid"]);
+                String profileUrl = await ownerFirebaseOperation.profilePictureUrl(images[0], widget.userData["uid"]);
+                String profilePictureDownloadUrl =
+                    await ownerFirebaseOperation.getDownloadUrlProfilePicture(widget.userData["uid"]);
                 print("Uploaded profile picture: " + profileUrl);
 
                 OwnerProfileSetup model = OwnerProfileSetup(
@@ -204,15 +190,12 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                     longitude: locationData["position"]["longitude"],
                     locality: locationData["locality"],
                     subLocality: locationData["subLocality"],
+                    profilePictureDownloadUrl: profilePictureDownloadUrl,
                     profileUrl: profileUrl);
 
-                ownerFirebaseOperation.updateRegistrationProfile(
-                    model.toJson(), widget.userData["uid"]);
+                ownerFirebaseOperation.updateRegistrationProfile(model.toJson(), widget.userData["uid"]);
 
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => OwnerHome()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OwnerHome()));
               },
               backgroundColor: fabColor,
               elevation: 10,
@@ -242,8 +225,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
             homeImageUploaded
                 ? Expanded(
                     child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                       children: homeImages
                           .map((e) => Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -252,9 +234,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                                   width: size.width * 0.33,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: FittedBox(
-                                        fit: BoxFit.cover,
-                                        child: Image.file(e)),
+                                    child: FittedBox(fit: BoxFit.cover, child: Image.file(e)),
                                   ),
                                 ),
                               ))
@@ -285,12 +265,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                         ),
                         decoration: BoxDecoration(
                             color: Color(0xFF006AAE),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.blue.withOpacity(0.5),
-                                  blurRadius: 2,
-                                  spreadRadius: 1)
-                            ],
+                            boxShadow: [BoxShadow(color: Colors.blue.withOpacity(0.5), blurRadius: 2, spreadRadius: 1)],
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
@@ -307,8 +282,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
       padding: const EdgeInsets.all(24.0),
       child: ListView(
         children: <Widget>[
-          new Text("Upload profile picture",
-              style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Upload profile picture", style: AppTextStyle().cardHeadingPrimaryStyle),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
@@ -321,8 +295,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       width: size.width * 0.33,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: FittedBox(
-                            fit: BoxFit.cover, child: Image.file(images[0])),
+                        child: FittedBox(fit: BoxFit.cover, child: Image.file(images[0])),
                       ),
                     )
                   : Material(
@@ -347,19 +320,13 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                         ),
                         decoration: BoxDecoration(
                             color: Color(0xFFFF2366),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.pink,
-                                  spreadRadius: 2,
-                                  blurRadius: 10)
-                            ],
+                            boxShadow: [BoxShadow(color: Colors.pink, spreadRadius: 2, blurRadius: 10)],
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
             ),
           ),
-          new Text("Current location",
-              style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Current location", style: AppTextStyle().cardHeadingPrimaryStyle),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
@@ -383,13 +350,11 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       style: AppTextStyle().whiteTextColor,
                     ),
                     new Text(
-                      "Latitude: " +
-                          locationData["position"]["latitude"].toString(),
+                      "Latitude: " + locationData["position"]["latitude"].toString(),
                       style: AppTextStyle().whiteTextColor,
                     ),
                     new Text(
-                      "Longitude: " +
-                          locationData["position"]["longitude"].toString(),
+                      "Longitude: " + locationData["position"]["longitude"].toString(),
                       style: AppTextStyle().whiteTextColor,
                     ),
                   ],
