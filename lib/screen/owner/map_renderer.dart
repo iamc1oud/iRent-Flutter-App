@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong/latlong.dart';
+import 'package:map_controller/map_controller.dart';
 import 'package:user_location/user_location.dart';
 
 class MapBoxScreen extends StatefulWidget {
@@ -13,18 +17,27 @@ class MapBoxScreen extends StatefulWidget {
 }
 
 class _MapBoxScreenState extends State<MapBoxScreen> {
-  MapController mapController = MapController();
+  MapController mapController;
+
+  StatefulMapController statefulMapController;
+  StreamSubscription<StatefulMapControllerStateChange> sub;
   UserLocationOptions userLocationOptions;
-  List<Marker> markers = [];
+  List<Marker> markers;
 
   @override
   void initState() {
+    mapController = MapController();
+    statefulMapController = StatefulMapController(mapController: mapController);
+
+    statefulMapController.onReady.then((value) => print("Controller is ready"));
+    sub = statefulMapController.changeFeed.listen((change) => setState(() {}));
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    sub.cancel();
     super.dispose();
   }
 
@@ -32,7 +45,6 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
   Widget build(BuildContext context) {
     userLocationOptions = UserLocationOptions(
         showMoveToCurrentLocationFloatingActionButton: true,
-        updateMapLocationOnPositionChange: false,
         context: context,
         zoomToCurrentLocationOnLoad: true,
         mapController: mapController,

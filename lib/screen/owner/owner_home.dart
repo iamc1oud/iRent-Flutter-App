@@ -30,7 +30,7 @@ class _OwnerHomeState extends State<OwnerHome> {
       items: _navBarsItems(),
 
       confineInSafeArea: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xfff8f8ff),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears.
       stateManagement: true,
@@ -42,10 +42,9 @@ class _OwnerHomeState extends State<OwnerHome> {
       ),
       popAllScreensOnTapOfSelectedTab: true,
       itemAnimationProperties: ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
+          // Navigation Bar's items animation properties.
+          duration: Duration(milliseconds: 700),
+          curve: Curves.easeIn),
       screenTransitionAnimation: ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,

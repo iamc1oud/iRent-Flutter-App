@@ -46,6 +46,8 @@ dependencies:
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   shimmer:
+  latlong:
+  map_controller:
 
 dev_dependencies:
   flutter_test:

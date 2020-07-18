@@ -127,6 +127,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  extra_pedantic:
+    dependency: transitive
+    description:
+      name: extra_pedantic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   file:
     dependency: transitive
     description:
@@ -261,6 +268,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
+  geodesy:
+    dependency: transitive
+    description:
+      name: geodesy
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
+  geojson:
+    dependency: transitive
+    description:
+      name: geojson
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1"
   geolocator:
     dependency: "direct main"
     description:
@@ -268,6 +289,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.3.2+2"
+  geopoint:
+    dependency: transitive
+    description:
+      name: geopoint
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.1"
   google_api_availability:
     dependency: transitive
     description:
@@ -338,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  iso:
+    dependency: transitive
+    description:
+      name: iso
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   js:
     dependency: transitive
     description:
@@ -346,7 +381,7 @@ packages:
     source: hosted
     version: "0.6.2"
   latlong:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: latlong
       url: "https://pub.dartlang.org"
@@ -373,6 +408,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.4"
+  map_controller:
+    dependency: "direct main"
+    description:
+      name: map_controller
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.1"
   matcher:
     dependency: transitive
     description:
@@ -512,7 +554,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.24.1"
+    version: "0.23.1"
   shimmer:
     dependency: "direct main"
     description:
@@ -525,6 +567,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slugify2:
+    dependency: transitive
+    description:
+      name: slugify2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   source_span:
     dependency: transitive
     description:

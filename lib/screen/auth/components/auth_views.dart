@@ -122,7 +122,6 @@ class _AuthViewsState extends State<AuthViews> {
                                             currentUserData: event.documents[0].data,
                                           )));
                         }
-
                         /*if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord" && event.documents[0].data["isRegistered"] == true) {*/
                         else {}
 

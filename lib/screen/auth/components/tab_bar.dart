@@ -4,21 +4,22 @@ import 'package:rent_app/style.dart';
 class TabBarComponent extends StatelessWidget {
   final List<String> tabs;
   final List<Widget> tabViews;
+  final int tabLength;
 
-  const TabBarComponent({Key key, this.tabs, this.tabViews}) : super(key: key);
+  const TabBarComponent({Key key, this.tabs, this.tabViews, this.tabLength}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return body(context);
   }
 
-  Widget body(context){
+  Widget body(context) {
     return DefaultTabController(
-      length: 2,
+      length: this.tabLength,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(5000),
+          preferredSize: Size.fromHeight(4000),
           child: Container(
             height: 70,
             decoration: containerDecoration(),
@@ -39,7 +40,7 @@ class TabBarComponent extends StatelessWidget {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.25),
+          color: Colors.black.withOpacity(0.10),
           blurRadius: 16,
           offset: Offset(0, 4),
         )
@@ -52,8 +53,7 @@ class TabBarComponent extends StatelessWidget {
       labelColor: Colors.indigo,
       unselectedLabelColor: Color(0xFFB6B6B6),
       indicator: CustomTabIndicator(),
-      labelStyle: TextStyle(
-          fontSize: 18, fontFamily: 'Roboto', fontWeight: FontWeight.w500),
+      labelStyle: TextStyle(fontSize: 18, fontFamily: 'Roboto'),
       tabs: tabs.map((tab) => Tab(text: tab)).toList(),
     );
   }

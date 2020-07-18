@@ -7,11 +7,9 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarComponent(
+        tabLength: 2,
         tabs: ["LOG IN", "SIGN UP"],
-        tabViews: <Widget>[
-          AuthViews(),
-          AuthViews(signup: true)
-        ],
+        tabViews: <Widget>[AuthViews(), AuthViews(signup: true)],
       ),
     );
   }
