@@ -73,6 +73,7 @@ class _OwnerHomeState extends State<OwnerHome> {
         color: Colors.indigoAccent,
         child: MapBoxScreen(
           userPosition: userPosition,
+
         ),
       ),
       Container(

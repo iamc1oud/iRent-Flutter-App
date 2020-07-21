@@ -6,8 +6,8 @@ import 'package:user_location/user_location.dart';
 
 class MapBoxScreen extends StatefulWidget {
   final Position userPosition;
-
-  const MapBoxScreen({Key key, this.userPosition}) : super(key: key);
+  final String username;
+  const MapBoxScreen({Key key, this.userPosition, this.username}) : super(key: key);
 
   @override
   _MapBoxScreenState createState() => _MapBoxScreenState();
@@ -17,7 +17,7 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
   MapController mapController;
   UserLocationOptions userLocationOptions;
   List<Marker> markers;
-
+  
   @override
   void initState() {
     mapController = MapController();
@@ -34,35 +34,14 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
   Widget build(BuildContext context) {
     var markers = <Marker>[
       Marker(
-        width: 40.0,
-        height: 40.0,
-        point: LatLng(widget.userPosition.latitude, widget.userPosition.longitude),
+        width: 100.0,
+        height: 1000.0,
+        point: LatLng(widget.userPosition.latitude + 1, widget.userPosition.longitude + 1),
         builder: (ctx) => Container(
-          child: FlutterLogo(
-            colors: Colors.blue,
+          child: IconButton(
+
+            icon: Icon(Icons.add_location),
             key: ObjectKey(Colors.blue),
-          ),
-        ),
-      ),
-      Marker(
-        width: 80.0,
-        height: 80.0,
-        point: LatLng(53.3498, -6.2603),
-        builder: (ctx) => Container(
-          child: FlutterLogo(
-            colors: Colors.green,
-            key: ObjectKey(Colors.green),
-          ),
-        ),
-      ),
-      Marker(
-        width: 80.0,
-        height: 80.0,
-        point: LatLng(48.8566, 2.3522),
-        builder: (ctx) => Container(
-          child: FlutterLogo(
-            colors: Colors.purple,
-            key: ObjectKey(Colors.purple),
           ),
         ),
       ),
@@ -70,12 +49,15 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
     userLocationOptions = UserLocationOptions(
         showMoveToCurrentLocationFloatingActionButton: true,
         context: context,
-        zoomToCurrentLocationOnLoad: true,
+        updateMapLocationOnPositionChange: false,
         mapController: mapController,
         markers: markers);
 
     return new FlutterMap(
-      options: new MapOptions(minZoom: 5.0, maxZoom: 15.0, plugins: [UserLocationPlugin()]),
+      options: new MapOptions(
+        plugins: [UserLocationPlugin()],
+        center: LatLng(51.5, -0.09),
+        zoom: 5.0,),
       layers: [
         new TileLayerOptions(
           urlTemplate: MapStyles.currentTheme,
