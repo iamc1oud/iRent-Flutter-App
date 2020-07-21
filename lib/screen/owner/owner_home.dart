@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
@@ -15,7 +16,8 @@ class OwnerHome extends StatefulWidget {
 }
 
 class _OwnerHomeState extends State<OwnerHome> {
-  PersistentTabController persistentTabController = new PersistentTabController();
+  PersistentTabController persistentTabController =
+      new PersistentTabController();
 
   @override
   void initState() {
@@ -32,12 +34,14 @@ class _OwnerHomeState extends State<OwnerHome> {
       confineInSafeArea: true,
       backgroundColor: Color(0xfff8f8ff),
       handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears.
+      resizeToAvoidBottomInset:
+          true, // This needs to be true if you want to move up the screen when keyboard appears.
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
         colorBehindNavBar: Colors.white,
       ),
       popAllScreensOnTapOfSelectedTab: true,
@@ -51,11 +55,15 @@ class _OwnerHomeState extends State<OwnerHome> {
         curve: Curves.fastLinearToSlowEaseIn,
         duration: Duration(milliseconds: 300),
       ),
-      navBarStyle: NavBarStyle.style16, // Choose the nav bar style with this property.
+      navBarStyle:
+          NavBarStyle.style16, // Choose the nav bar style with this property.
     );
   }
 
   List<Widget> _buildScreens() {
+    Position userPosition = new Position(
+        latitude: widget.currentUserData["latitude"],
+        longitude: widget.currentUserData["longitude"]);
     return [
       profileWidget(
           firstname: widget.currentUserData["firstname"],
@@ -63,7 +71,9 @@ class _OwnerHomeState extends State<OwnerHome> {
           profileUrl: widget.currentUserData["profilePictureDownloadUrl"]),
       Container(
         color: Colors.indigoAccent,
-        child: MapBoxScreen(),
+        child: MapBoxScreen(
+          userPosition: userPosition,
+        ),
       ),
       Container(
         color: Colors.orangeAccent,

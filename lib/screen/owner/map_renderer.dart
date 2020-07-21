@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-import 'package:map_controller/map_controller.dart';
 import 'package:user_location/user_location.dart';
 
 class MapBoxScreen extends StatefulWidget {
@@ -18,31 +15,58 @@ class MapBoxScreen extends StatefulWidget {
 
 class _MapBoxScreenState extends State<MapBoxScreen> {
   MapController mapController;
-
-  StatefulMapController statefulMapController;
-  StreamSubscription<StatefulMapControllerStateChange> sub;
   UserLocationOptions userLocationOptions;
   List<Marker> markers;
 
   @override
   void initState() {
     mapController = MapController();
-    statefulMapController = StatefulMapController(mapController: mapController);
-
-    statefulMapController.onReady.then((value) => print("Controller is ready"));
-    sub = statefulMapController.changeFeed.listen((change) => setState(() {}));
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    sub.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    var markers = <Marker>[
+      Marker(
+        width: 40.0,
+        height: 40.0,
+        point: LatLng(widget.userPosition.latitude, widget.userPosition.longitude),
+        builder: (ctx) => Container(
+          child: FlutterLogo(
+            colors: Colors.blue,
+            key: ObjectKey(Colors.blue),
+          ),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(53.3498, -6.2603),
+        builder: (ctx) => Container(
+          child: FlutterLogo(
+            colors: Colors.green,
+            key: ObjectKey(Colors.green),
+          ),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(48.8566, 2.3522),
+        builder: (ctx) => Container(
+          child: FlutterLogo(
+            colors: Colors.purple,
+            key: ObjectKey(Colors.purple),
+          ),
+        ),
+      ),
+    ];
     userLocationOptions = UserLocationOptions(
         showMoveToCurrentLocationFloatingActionButton: true,
         context: context,
