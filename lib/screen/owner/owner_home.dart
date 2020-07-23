@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
@@ -22,6 +23,7 @@ class _OwnerHomeState extends State<OwnerHome> {
   @override
   void initState() {
     // TODO: implement initState
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     super.initState();
   }
 
@@ -72,8 +74,8 @@ class _OwnerHomeState extends State<OwnerHome> {
       Container(
         color: Colors.indigoAccent,
         child: MapBoxScreen(
+          currentUserImageUrl: widget.currentUserData["profilePictureDownloadUrl"],
           userPosition: userPosition,
-
         ),
       ),
       Container(
