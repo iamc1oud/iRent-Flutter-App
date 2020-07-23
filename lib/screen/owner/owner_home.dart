@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
+import 'package:rent_app/screen/owner/pages/settngs_page.dart';
 import 'package:rent_app/utils/owner_firebase_operation.dart';
 
 class OwnerHome extends StatefulWidget {
@@ -78,10 +79,8 @@ class _OwnerHomeState extends State<OwnerHome> {
           userPosition: userPosition,
         ),
       ),
-      Container(
-        color: Colors.orangeAccent,
-        child: Center(child: new Text("Settings")),
-      ),
+      // Pass the current context to pop the Main Screen of app instead of popping only the current tab view.
+      SettingWidget(ctx: context,)
     ];
   }
 

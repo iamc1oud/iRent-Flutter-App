@@ -28,6 +28,10 @@ class FirebaseRepository extends FirebaseHandlers {
     this.context = context;
   }
 
+  Future<void> logOut() async{
+    await firebaseAuth.signOut();
+  }
+
   @override
   Future<FirebaseUser> loginUser({String email, String password}) async {
     bool successfulLogin = false;

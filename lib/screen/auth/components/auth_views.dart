@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/screen/guest/guest_home.dart';
+import 'package:rent_app/screen/guest/guest_info_register.dart';
 import 'package:rent_app/screen/homescreen/home.dart';
 import 'package:rent_app/screen/owner/owner_home.dart';
 import 'package:rent_app/screen/owner/owner_info_register.dart';
@@ -123,7 +124,20 @@ class _AuthViewsState extends State<AuthViews> {
                                           )));
                         }
                         /*if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord" && event.documents[0].data["isRegistered"] == true) {*/
-                        else {}
+                        else if(event.documents[0].data["isOwnerOrGuest"] == "user_guest") {
+                          event.documents[0].data["isRegistered"] == false ? Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GuestInfoRegisterScreen(
+                                    userData: event.documents[0].data,
+                                  )))
+                              : Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GuestHomeScreen(
+                                    currentUserData: event.documents[0].data,
+                                  )));
+                        }
 
                         /*else {
                           print("Function called");

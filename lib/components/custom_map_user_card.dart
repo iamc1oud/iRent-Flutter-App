@@ -12,7 +12,6 @@ class CustomMapUserCard extends StatelessWidget {
             color: Colors.black87,
           borderRadius: BorderRadius.circular(10)
         ),
-
         child: new Row(children: <Widget>[
           new Container(
             child: new Container(
