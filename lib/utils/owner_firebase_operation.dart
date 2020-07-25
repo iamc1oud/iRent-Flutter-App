@@ -3,18 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geo_firestore/geo_firestore.dart';
 import 'package:rent_app/utils/owner_firebase_interface.dart';
 
 class OwnerFirebaseOperation extends OwnerFirebaseInterface {
 
   Future<void> storeLocationWithUid(Map<String, dynamic> userRegistrationData, String uid) async {
     try {
-
-      Firestore.instance.collection("location").document().setData({
-        "latitude" : userRegistrationData["latitude"],
-        "longitude" : userRegistrationData["longitude"],
-        "uid" : uid
-      });
+      Firestore firestore = Firestore.instance;
+      GeoFirestore geoFirestore = GeoFirestore(firestore.collection("location"));
+      await geoFirestore.setLocation(uid, GeoPoint(userRegistrationData["latitude"], userRegistrationData["longitude"]));
     }
     catch (e) {
       print("Error occured ::::: " + e.toString());

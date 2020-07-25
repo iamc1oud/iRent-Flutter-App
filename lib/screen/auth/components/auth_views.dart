@@ -299,7 +299,7 @@ class _AuthViewsState extends State<AuthViews> {
                       password: passwordSignUpController.text,
                       isOwnerorGuest: _userStatus);
 
-                  if (user != null && _userStatus == "user_landlord") {
+                  /*if (user != null && _userStatus == "user_landlord") {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -313,7 +313,7 @@ class _AuthViewsState extends State<AuthViews> {
                             builder: (context) => GuestInfoRegisterScreen(
                                   userType: _userStatus,
                                 )));
-                  }
+                  }*/
                 },
                 child: new Text(
                   "Submit",
