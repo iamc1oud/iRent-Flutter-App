@@ -2,11 +2,27 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rent_app/utils/owner_firebase_interface.dart';
 
 class OwnerFirebaseOperation extends OwnerFirebaseInterface {
+
+  Future<void> storeLocationWithUid(Map<String, dynamic> userRegistrationData, String uid) async {
+    try {
+
+      Firestore.instance.collection("location").document().setData({
+        "latitude" : userRegistrationData["latitude"],
+        "longitude" : userRegistrationData["longitude"],
+        "uid" : uid
+      });
+    }
+    catch (e) {
+      print("Error occured ::::: " + e.toString());
+    }
+  }
+
   @override
-  Future<void> updateRegistrationProfile(Map<String, dynamic> userRegistrationData, String userUid) async {
+  Future<void> updateRegistrationProfile(Map<String, dynamic> userRegistrationData, String userUid, String userType) async {
     // Find document for current userUid
     try {
       await Firestore.instance
@@ -23,6 +39,7 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
           }
         });
       });
+
     } catch (e) {
       print(e.toString());
     }
@@ -36,6 +53,21 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
     StorageUploadTask uploadTask = storageReference.putFile(profileImage);
     StorageTaskSnapshot snapshot = await uploadTask.onComplete;
     return snapshot.storageMetadata.path;
+  }
+
+  @override
+  // ignore: missing_return
+  Future<bool> uploadHomePicture(List<File> homeImages, String uid) async {
+    try {
+      for(int i = 0; i < homeImages.length; i++){
+        StorageReference storageReference = FirebaseStorage().ref().child("homeImages/${uid}_home_${i.toString()}");
+        storageReference.putFile(homeImages[i]);
+      }
+      return true;
+    } catch (e){
+      print("Error found:::::: " + e.toString());
+    }
+
   }
 
   @override

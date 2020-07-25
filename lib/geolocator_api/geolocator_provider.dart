@@ -16,7 +16,7 @@ class GeolocatorProvider extends GeoLocatorInterface with ChangeNotifier {
     currentPosition = await Geolocator().getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best
     );
-    notifyListeners();
+    return currentPosition;
   }
 
   @override

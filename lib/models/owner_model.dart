@@ -9,10 +9,10 @@ class OwnerProfileSetup {
   OwnerProfileSetup(
       {this.profilePictureDownloadUrl,
       this.profileUrl,
-      this.latitude,
+      this.latitude ,
       this.longitude,
       this.countryISOCode,
-      this.locality,
+      this.locality ,
       this.subLocality});
 
   Map<String, dynamic> toJson() => {

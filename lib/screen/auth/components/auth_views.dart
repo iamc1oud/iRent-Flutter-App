@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/screen/guest/guest_home.dart';
 import 'package:rent_app/screen/guest/guest_info_register.dart';
-import 'package:rent_app/screen/homescreen/home.dart';
 import 'package:rent_app/screen/owner/owner_home.dart';
 import 'package:rent_app/screen/owner/owner_info_register.dart';
 import 'package:rent_app/style.dart';
@@ -28,7 +27,8 @@ class _AuthViewsState extends State<AuthViews> {
   final TextEditingController firstNameController = new TextEditingController();
   final TextEditingController lastNameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordSignUpController = new TextEditingController();
+  final TextEditingController passwordSignUpController =
+      new TextEditingController();
   String _userStatus;
 
   @override
@@ -38,7 +38,9 @@ class _AuthViewsState extends State<AuthViews> {
 
   Widget body(context) {
     return ListView(
-      children: <Widget>[widget.signup ? signUpView(context) : loginView(context)],
+      children: <Widget>[
+        widget.signup ? signUpView(context) : loginView(context)
+      ],
     );
   }
 
@@ -97,48 +99,57 @@ class _AuthViewsState extends State<AuthViews> {
                 width: 200,
                 child: new RaisedButton(
                   elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
                     var user = await firebaseRepository.loginUser(
-                        email: usernameController.text, password: passwordController.text);
+                        email: usernameController.text,
+                        password: passwordController.text);
                     if (user != null) {
                       // Find user in user collection
-                      Stream<QuerySnapshot> identity =
-                          firebaseRepository.findIdentityOfUser(email: usernameController.text);
+                      Stream<QuerySnapshot> identity = firebaseRepository
+                          .findIdentityOfUser(email: usernameController.text);
 
                       identity.listen((event) {
                         print(event.documents[0].data);
-                        if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord") {
+                        if (event.documents[0].data["isOwnerOrGuest"] ==
+                            "user_landlord") {
                           event.documents[0].data["isRegistered"] == false
                               ? Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => OwnerInfoRegisterScreen(
+                                      builder: (context) =>
+                                          OwnerInfoRegisterScreen(
+                                            userType: "user_landlord",
                                             userData: event.documents[0].data,
                                           )))
                               : Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => OwnerHome(
-                                            currentUserData: event.documents[0].data,
+                                            currentUserData:
+                                                event.documents[0].data,
                                           )));
                         }
                         /*if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord" && event.documents[0].data["isRegistered"] == true) {*/
-                        else if(event.documents[0].data["isOwnerOrGuest"] == "user_guest") {
-                          event.documents[0].data["isRegistered"] == false ? Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GuestInfoRegisterScreen(
-                                    userData: event.documents[0].data,
-                                  )))
+                        else if (event.documents[0].data["isOwnerOrGuest"] ==
+                            "user_guest") {
+                          event.documents[0].data["isRegistered"] == false
+                              ? Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          GuestInfoRegisterScreen(
+                                            userData: event.documents[0].data,
+                                          )))
                               : Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GuestHomeScreen(
-                                    currentUserData: event.documents[0].data,
-                                  )));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GuestHomeScreen(
+                                            currentUserData:
+                                                event.documents[0].data,
+                                          )));
                         }
-
                         /*else {
                           print("Function called");
                           Navigator.push(context, MaterialPageRoute(builder: (context) => GuestHomeScreen()));
@@ -175,7 +186,10 @@ class _AuthViewsState extends State<AuthViews> {
             padding: const EdgeInsets.only(top: 26, bottom: 8),
             child: new Text(
               "Create account",
-              style: TextStyle(fontFamily: "RobotoSlab", fontSize: 30, color: AppStyle().secondaryTextColor),
+              style: TextStyle(
+                  fontFamily: "RobotoSlab",
+                  fontSize: 30,
+                  color: AppStyle().secondaryTextColor),
             ),
           ),
           Padding(
@@ -275,7 +289,8 @@ class _AuthViewsState extends State<AuthViews> {
               width: 200,
               child: new RaisedButton(
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
                   var user = await firebaseRepository.registerUser(
                       firstName: firstNameController.text,
@@ -285,9 +300,19 @@ class _AuthViewsState extends State<AuthViews> {
                       isOwnerorGuest: _userStatus);
 
                   if (user != null && _userStatus == "user_landlord") {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerInfoRegisterScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OwnerInfoRegisterScreen(
+                                  userType: _userStatus,
+                                )));
                   } else if (user != null && _userStatus == "user_guest") {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => GuestHomeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GuestInfoRegisterScreen(
+                                  userType: _userStatus,
+                                )));
                   }
                 },
                 child: new Text(

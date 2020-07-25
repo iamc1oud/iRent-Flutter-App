@@ -16,8 +16,9 @@ import 'owner_home.dart';
 class OwnerInfoRegisterScreen extends StatefulWidget {
   // Store user collection data for logged in user
   final Map<String, dynamic> userData;
+  final String userType;
 
-  const OwnerInfoRegisterScreen({Key key, this.userData}) : super(key: key);
+  const OwnerInfoRegisterScreen({Key key, this.userData, this.userType}) : super(key: key);
 
   @override
   _OwnerInfoRegisterScreenState createState() => _OwnerInfoRegisterScreenState();
@@ -84,6 +85,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(widget.userData);
     getLocation();
   }
 
@@ -179,6 +181,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
       floatingActionButton: fabVisible
           ? new FloatingActionButton(
               onPressed: () async {
+                print(widget.userData["uid"]);
                 String profileUrl = await ownerFirebaseOperation.profilePictureUrl(images[0], widget.userData["uid"]);
                 String profilePictureDownloadUrl =
                     await ownerFirebaseOperation.getDownloadUrlProfilePicture(widget.userData["uid"]);
@@ -193,9 +196,30 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                     profilePictureDownloadUrl: profilePictureDownloadUrl,
                     profileUrl: profileUrl);
 
-                ownerFirebaseOperation.updateRegistrationProfile(model.toJson(), widget.userData["uid"]);
 
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OwnerHome()));
+
+                await ownerFirebaseOperation.updateRegistrationProfile(model.toJson(), widget.userData["uid"], widget.userType);
+                await ownerFirebaseOperation.uploadHomePicture(homeImages, widget.userData["uid"]);
+                await ownerFirebaseOperation.storeLocationWithUid({
+                  "latitude": locationData["position"]["latitude"],
+                  "longitude": locationData["position"]["longitude"],
+                }, widget.userData["uid"]);
+
+                // New map data
+                widget.userData.addAll({
+                  "countryISOCode": locationData["isoCountryCode"],
+                  'latitude': locationData["position"]["latitude"],
+                  'longitude': locationData["position"]["longitude"],
+                  'locality': locationData["locality"],
+                  'subLocality': locationData["subLocality"],
+                  'profilePictureDownloadUrl': profilePictureDownloadUrl,
+                  'profileUrl': profileUrl
+                });
+
+                // After registration navigate to homescreen
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OwnerHome(
+                    currentUserData: widget.userData,
+                )));
               },
               backgroundColor: fabColor,
               elevation: 10,
@@ -349,14 +373,14 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                       "Locality: " + locationData["locality"],
                       style: AppTextStyle().whiteTextColor,
                     ),
-                    new Text(
+                    /*new Text(
                       "Latitude: " + locationData["position"]["latitude"].toString(),
                       style: AppTextStyle().whiteTextColor,
                     ),
                     new Text(
                       "Longitude: " + locationData["position"]["longitude"].toString(),
                       style: AppTextStyle().whiteTextColor,
-                    ),
+                    ),*/
                   ],
                 ),
               ),
@@ -370,7 +394,12 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
               elevation: 5,
               child: Container(
                 height: 200,
-                child: MapBoxScreen(),
+                child: MapBoxScreen(
+                  userPosition: Position(
+                    latitude:locationData["position"]["latitude"],
+                    longitude: locationData["position"]["longitude"]
+                  ),
+                ),
               ),
             ),
           )
