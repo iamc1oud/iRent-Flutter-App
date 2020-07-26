@@ -27,8 +27,7 @@ class _AuthViewsState extends State<AuthViews> {
   final TextEditingController firstNameController = new TextEditingController();
   final TextEditingController lastNameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordSignUpController =
-      new TextEditingController();
+  final TextEditingController passwordSignUpController = new TextEditingController();
   String _userStatus;
 
   @override
@@ -38,9 +37,7 @@ class _AuthViewsState extends State<AuthViews> {
 
   Widget body(context) {
     return ListView(
-      children: <Widget>[
-        widget.signup ? signUpView(context) : loginView(context)
-      ],
+      children: <Widget>[widget.signup ? signUpView(context) : loginView(context)],
     );
   }
 
@@ -99,27 +96,25 @@ class _AuthViewsState extends State<AuthViews> {
                 width: 200,
                 child: new RaisedButton(
                   elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
                     var user = await firebaseRepository.loginUser(
-                        email: usernameController.text,
-                        password: passwordController.text);
+                        email: usernameController.text, password: passwordController.text);
                     if (user != null) {
                       // Find user in user collection
-                      Stream<QuerySnapshot> identity = firebaseRepository
-                          .findIdentityOfUser(email: usernameController.text);
+                      Stream<QuerySnapshot> identity =
+                          firebaseRepository.findIdentityOfUser(email: usernameController.text);
 
                       identity.listen((event) {
                         print(event.documents[0].data);
-                        if (event.documents[0].data["isOwnerOrGuest"] ==
-                            "user_landlord") {
+
+                        // For owner
+                        if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord") {
                           event.documents[0].data["isRegistered"] == false
                               ? Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          OwnerInfoRegisterScreen(
+                                      builder: (context) => OwnerInfoRegisterScreen(
                                             userType: "user_landlord",
                                             userData: event.documents[0].data,
                                           )))
@@ -127,27 +122,23 @@ class _AuthViewsState extends State<AuthViews> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => OwnerHome(
-                                            currentUserData:
-                                                event.documents[0].data,
+                                            currentUserData: event.documents[0].data,
                                           )));
                         }
-                        /*if (event.documents[0].data["isOwnerOrGuest"] == "user_landlord" && event.documents[0].data["isRegistered"] == true) {*/
-                        else if (event.documents[0].data["isOwnerOrGuest"] ==
-                            "user_guest") {
+                        // For guest
+                        else if (event.documents[0].data["isOwnerOrGuest"] == "user_guest") {
                           event.documents[0].data["isRegistered"] == false
                               ? Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          GuestInfoRegisterScreen(
+                                      builder: (context) => GuestInfoRegisterScreen(
                                             userData: event.documents[0].data,
                                           )))
                               : Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => GuestHomeScreen(
-                                            currentUserData:
-                                                event.documents[0].data,
+                                            currentUserData: event.documents[0].data,
                                           )));
                         }
                         /*else {
@@ -186,10 +177,7 @@ class _AuthViewsState extends State<AuthViews> {
             padding: const EdgeInsets.only(top: 26, bottom: 8),
             child: new Text(
               "Create account",
-              style: TextStyle(
-                  fontFamily: "RobotoSlab",
-                  fontSize: 30,
-                  color: AppStyle().secondaryTextColor),
+              style: TextStyle(fontFamily: "RobotoSlab", fontSize: 30, color: AppStyle().secondaryTextColor),
             ),
           ),
           Padding(
@@ -289,8 +277,7 @@ class _AuthViewsState extends State<AuthViews> {
               width: 200,
               child: new RaisedButton(
                 elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
                   var user = await firebaseRepository.registerUser(
                       firstName: firstNameController.text,

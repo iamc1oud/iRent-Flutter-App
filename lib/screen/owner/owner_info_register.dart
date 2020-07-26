@@ -196,13 +196,19 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                     profilePictureDownloadUrl: profilePictureDownloadUrl,
                     profileUrl: profileUrl);
 
-
-
-                await ownerFirebaseOperation.updateRegistrationProfile(model.toJson(), widget.userData["uid"], widget.userType);
+                await ownerFirebaseOperation.updateRegistrationProfile(
+                    model.toJson(), widget.userData["uid"], widget.userType);
                 await ownerFirebaseOperation.uploadHomePicture(homeImages, widget.userData["uid"]);
+
+                print("Operation:::: Updating location collection with following parameters:");
+                print("Latitude :" + locationData["position"]["latitude"].toString());
+                print("Longitude :" + locationData["position"]["longitude"].toString());
+                print("profileImage :" + model.profilePictureDownloadUrl);
+
                 await ownerFirebaseOperation.storeLocationWithUid({
                   "latitude": locationData["position"]["latitude"],
                   "longitude": locationData["position"]["longitude"],
+                  "profileImage": model.profilePictureDownloadUrl
                 }, widget.userData["uid"]);
 
                 // New map data
@@ -217,9 +223,12 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                 });
 
                 // After registration navigate to homescreen
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OwnerHome(
-                    currentUserData: widget.userData,
-                )));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => OwnerHome(
+                              currentUserData: widget.userData,
+                            )));
               },
               backgroundColor: fabColor,
               elevation: 10,
@@ -396,9 +405,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                 height: 200,
                 child: MapBoxScreen(
                   userPosition: Position(
-                    latitude:locationData["position"]["latitude"],
-                    longitude: locationData["position"]["longitude"]
-                  ),
+                      latitude: locationData["position"]["latitude"], longitude: locationData["position"]["longitude"]),
                 ),
               ),
             ),

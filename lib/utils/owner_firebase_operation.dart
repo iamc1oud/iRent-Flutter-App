@@ -7,20 +7,22 @@ import 'package:geo_firestore/geo_firestore.dart';
 import 'package:rent_app/utils/owner_firebase_interface.dart';
 
 class OwnerFirebaseOperation extends OwnerFirebaseInterface {
-
   Future<void> storeLocationWithUid(Map<String, dynamic> userRegistrationData, String uid) async {
     try {
       Firestore firestore = Firestore.instance;
       GeoFirestore geoFirestore = GeoFirestore(firestore.collection("location"));
-      await geoFirestore.setLocation(uid, GeoPoint(userRegistrationData["latitude"], userRegistrationData["longitude"]));
-    }
-    catch (e) {
+
+      await firestore.collection("location").document(uid).setData({"imageUrl": userRegistrationData["profileImage"]});
+      await geoFirestore.setLocation(
+          uid, GeoPoint(userRegistrationData["latitude"], userRegistrationData["longitude"]));
+    } catch (e) {
       print("Error occured ::::: " + e.toString());
     }
   }
 
   @override
-  Future<void> updateRegistrationProfile(Map<String, dynamic> userRegistrationData, String userUid, String userType) async {
+  Future<void> updateRegistrationProfile(
+      Map<String, dynamic> userRegistrationData, String userUid, String userType) async {
     // Find document for current userUid
     try {
       await Firestore.instance
@@ -37,7 +39,6 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
           }
         });
       });
-
     } catch (e) {
       print(e.toString());
     }
@@ -57,15 +58,14 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
   // ignore: missing_return
   Future<bool> uploadHomePicture(List<File> homeImages, String uid) async {
     try {
-      for(int i = 0; i < homeImages.length; i++){
+      for (int i = 0; i < homeImages.length; i++) {
         StorageReference storageReference = FirebaseStorage().ref().child("homeImages/${uid}_home_${i.toString()}");
         storageReference.putFile(homeImages[i]);
       }
       return true;
-    } catch (e){
+    } catch (e) {
       print("Error found:::::: " + e.toString());
     }
-
   }
 
   @override

@@ -5,9 +5,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geo_firestore/geo_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
-import 'package:location/location.dart' as locationpackage;
-import 'package:location/location.dart';
-import 'package:rent_app/components/custom_map_user_card.dart';
+import 'package:rent_app/models/location_model.dart';
+import 'package:rent_app/components/custom_map_user_marker.dart';
 import 'package:user_location/user_location.dart';
 
 class NearbyMapScreen extends StatefulWidget {
@@ -23,12 +22,10 @@ class _NearbyMapScreenState extends State<NearbyMapScreen> {
   MapController mapController;
   UserLocationOptions userLocationOptions;
   List<Marker> markers;
-  final queryLocation = GeoPoint(28.470294, 77.1248861);
-  final locationpackage.Location _location = new locationpackage.Location();
-  LocationData _currentLocation;
+  List<LandlordLocationModel> newPoints = [];
 
-  bool _liveUpdate = true;
-  bool _permission = false;
+  final queryLocation = GeoPoint(28.470294, 77.1248861);
+
   Firestore firestore = Firestore.instance;
   GeoFirestore geoFirestore;
   @override
@@ -41,20 +38,18 @@ class _NearbyMapScreenState extends State<NearbyMapScreen> {
   }
 
   fetchLocations() async {
-    List<DocumentSnapshot> result =
-        await geoFirestore.getAtLocation(queryLocation, 50);
-    print(result);
+    List<DocumentSnapshot> result = await geoFirestore.getAtLocation(queryLocation, 50);
     for (int i = 0; i < result.length; i++) {
+      LatLng latlng = LatLng(
+        result[i].data["location"].latitude,
+        result[i].data["location"].longitude,
+      );
+      LandlordLocationModel obj =
+          new LandlordLocationModel(docId: result[i].documentID, latlng: latlng, imageUrl: result[i].data["imageUrl"]);
+
+      print(result[i].data);
       setState(() {
-        markers.add(Marker(
-            point: LatLng(result[0].data["location"].latitude,
-                result[0].data["location"].longitude),
-            builder: (context) => Icon(
-                  Icons.airline_seat_legroom_normal,
-                  size: 50,
-                ),
-            height: 100,
-            width: 100));
+        newPoints.add(obj);
       });
     }
   }
@@ -67,6 +62,19 @@ class _NearbyMapScreenState extends State<NearbyMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var markers = newPoints.map((obj) {
+      return Marker(
+          width: 50,
+          height: 50,
+          point: obj.latlng,
+          builder: (context) => Container(
+                child: CustomMapUserMarker(
+                  docId: obj.docId,
+                  imageUrl: obj.imageUrl,
+                ),
+              ));
+    }).toList();
+
     userLocationOptions = UserLocationOptions(
         showMoveToCurrentLocationFloatingActionButton: true,
         context: context,
@@ -74,31 +82,32 @@ class _NearbyMapScreenState extends State<NearbyMapScreen> {
         mapController: mapController,
         markers: markers);
 
-    return new FlutterMap(
-      options: new MapOptions(
-        maxZoom: 20,
-        minZoom: 10,
-        plugins: [UserLocationPlugin()],
-        center:
-            LatLng(widget.userPosition.latitude, widget.userPosition.longitude),
-        zoom: 5.0,
+    return Scaffold(
+      body: new FlutterMap(
+        options: new MapOptions(
+          maxZoom: 20,
+          minZoom: 10,
+          plugins: [UserLocationPlugin()],
+          center: LatLng(widget.userPosition.latitude, widget.userPosition.longitude),
+          zoom: 5.0,
+        ),
+        layers: [
+          new TileLayerOptions(
+            placeholderImage: AssetImage("assets/loading/map_loader.gif"),
+            urlTemplate: MapStyles.currentTheme,
+            additionalOptions: {
+              'accessToken':
+                  'sk.eyJ1IjoiY2xvdWRtYXgiLCJhIjoiY2s3YzJzdnN5MGlxMzNxbXJkZXJ0N3RvYyJ9.CwnAoKlXU6qiva_nqqT1mA',
+              'id': 'mapbox.mapbox-streets-v7'
+            },
+          ),
+          MarkerLayerOptions(
+            markers: markers,
+          ),
+          userLocationOptions
+        ],
+        mapController: mapController,
       ),
-      layers: [
-        new TileLayerOptions(
-          placeholderImage: AssetImage("assets/loading/map_loader.gif"),
-          urlTemplate: MapStyles.currentTheme,
-          additionalOptions: {
-            'accessToken':
-                'sk.eyJ1IjoiY2xvdWRtYXgiLCJhIjoiY2s3YzJzdnN5MGlxMzNxbXJkZXJ0N3RvYyJ9.CwnAoKlXU6qiva_nqqT1mA',
-            'id': 'mapbox.mapbox-streets-v7'
-          },
-        ),
-        MarkerLayerOptions(
-          markers: markers,
-        ),
-        userLocationOptions
-      ],
-      mapController: mapController,
     );
   }
 }
