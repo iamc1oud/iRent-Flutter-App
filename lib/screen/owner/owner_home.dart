@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent_app/screen/map_renderer/nearby_map.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
 import 'package:rent_app/screen/owner/pages/settngs_page.dart';
@@ -74,8 +75,7 @@ class _OwnerHomeState extends State<OwnerHome> {
           profileUrl: widget.currentUserData["profilePictureDownloadUrl"]),
       Container(
         color: Colors.indigoAccent,
-        child: MapBoxScreen(
-          currentUserImageUrl: widget.currentUserData["profilePictureDownloadUrl"],
+        child: NearbyMapScreen(
           userPosition: userPosition,
         ),
       ),

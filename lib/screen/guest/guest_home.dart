@@ -90,8 +90,7 @@ class _GuestHomeScreenState extends State<GuestHomeScreen> {
       isLoading ?  new CircularProgressIndicator(): Container(
         color: Colors.indigoAccent,
         child: MapBoxScreen(
-          currentUserImageUrl:
-              widget.currentUserData["profilePictureDownloadUrl"],
+
           userPosition: currentPosition,
         ),
       ),

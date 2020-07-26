@@ -50,6 +50,7 @@ dependencies:
   vector_math: ^2.0.0
   proj4dart: ^1.0.4
   geo_firestore: ^0.0.1
+  location:
 
 dev_dependencies:
   flutter_test:
