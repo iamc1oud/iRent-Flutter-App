@@ -22,7 +22,9 @@ class CustomMapUserMarker extends StatelessWidget {
         //   },
         // );
 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CustomMapUserCard()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CustomMapUserCard(
+          uid: this.docId,
+        )));
       },
       child: Container(
           decoration: BoxDecoration(

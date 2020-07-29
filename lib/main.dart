@@ -5,6 +5,8 @@ import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+import 'package:rent_app/providers/CardDetailProvider.dart';
 import 'package:rent_app/screen/homescreen/home.dart';
 import 'package:rent_app/screen/splash_screen.dart';
 import 'package:rent_app/style.dart';
@@ -36,7 +38,13 @@ class App extends StatelessWidget {
           snackBarTheme: SnackBarThemeData(backgroundColor: AppStyle().secondaryTextColor),
           primaryColor: Colors.indigo,
           secondaryHeaderColor: Colors.black),
-      home: SplashScreen(),
+      home: MultiProvider(
+        providers: [
+          Provider(
+            create: (context) => UserDataProvider(),
+          )
+        ],
+          child: SplashScreen()),
     );
   }
 }

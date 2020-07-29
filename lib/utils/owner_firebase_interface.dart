@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
+import 'package:rent_app/models/map_marker_user_model.dart';
 
 abstract class OwnerFirebaseInterface {
 // TODO : Funtion to update the existing profile in users with the location and links of images provided by user.
@@ -20,4 +21,7 @@ abstract class OwnerFirebaseInterface {
   /// Format is : homeImages/${uid}_home_${i.toString()}
   /// Returns true on complete.
   Future<bool> uploadHomePicture(List<File> homeImages, String uid);
+
+  /// Return the dota about the tapped marker user in Custom Card Marker on top of Map screen
+  Stream<MapMarkerUserModel> streamMapMarkerUserModel(String id);
 }
