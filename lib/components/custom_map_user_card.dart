@@ -11,14 +11,13 @@ class CustomMapUserCard extends StatelessWidget {
   // Use provider here
   static bool isLoaded = false;
 
-
-
   const CustomMapUserCard({Key key, this.uid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoaded ? Padding(
+      body: isLoaded ? Padding
+        (
         padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +27,7 @@ class CustomMapUserCard extends StatelessWidget {
               children: <Widget>[
                 new Text(
                   "Name goes here",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab"),
                 ),
                 new CircleAvatar(
                   backgroundImage: NetworkImage(Constants().defaultImageUrl),
@@ -38,12 +37,12 @@ class CustomMapUserCard extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Gallery",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              child: new Text("Gallery",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab"),),
             ),
             galleryWidget(context),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Email Id",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              child: new Text("Email Id",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab")),
             ),
           ],
         ),
@@ -61,24 +60,31 @@ class CustomMapUserCard extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Gallery",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              child: new Text("Gallery",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab"),),
             ),
             placeHolderGalleryWidget(context),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Email Id",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              child: new Text("Email Id",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab")),
 
             ),
             placeHolderNameWidget(),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: new Text("Address",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              child: new Text("Address",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "RobotoSlab")),
             ),
-            placeHolderNameWidget(),
-            new SizedBox(
-              height: 10,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                placeHolderNameWidget(),
+                new SizedBox(
+                  height: 5,
+                ),
+                placeHolderNameSecondaryWidget()
+              ],
             ),
-            placeHolderNameSecondaryWidget()
+
+
           ],
         ),
       ),
@@ -113,6 +119,7 @@ class CustomMapUserCard extends StatelessWidget {
 
   Widget placeHolderNameWidget(){
     return Container(
+
       child: Shimmer.fromColors(
         baseColor: Constants().baseColor,
         highlightColor: Constants().highlightColor,
@@ -121,26 +128,27 @@ class CustomMapUserCard extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20)
           ),
-          width: 220,
+          width: 160,
           height: 28.0,
         )
     ));
   }
+
   Widget placeHolderNameSecondaryWidget()
   {
     return Container(
-        child: Shimmer.fromColors(
-            baseColor: Constants().baseColor,
-            highlightColor: Constants().highlightColor,
-            child:  Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)
-              ),
-              width: 260,
-              height: 28.0,
-            )
-        ));
+      child: Shimmer.fromColors(
+          baseColor: Constants().baseColor,
+          highlightColor: Constants().highlightColor,
+          child:  Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20)
+            ),
+            height: 28,
+          )
+      ),
+    );
   }
 
   Widget placeHolderProfileWidget(){

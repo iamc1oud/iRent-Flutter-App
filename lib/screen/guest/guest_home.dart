@@ -90,7 +90,6 @@ class _GuestHomeScreenState extends State<GuestHomeScreen> {
       isLoading ?  new CircularProgressIndicator(): Container(
         color: Colors.indigoAccent,
         child: MapBoxScreen(
-
           userPosition: currentPosition,
         ),
       ),
