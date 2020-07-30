@@ -18,9 +18,10 @@ class CustomMapUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserDataProvider userDataProvider = Provider.of<UserDataProvider>(context);
 
     return Scaffold(
-      body: isLoaded
+      body: !isLoaded
           ?  Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Column(
@@ -30,7 +31,7 @@ class CustomMapUserCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         new Text(
-                          "Some name",
+                          "Name",
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -122,6 +123,7 @@ class CustomMapUserCard extends StatelessWidget {
         child: new FloatingActionButton.extended(
           backgroundColor: Colors.indigoAccent,
           onPressed: () {
+            Provider.of<UserDataProvider>(context, listen: false).getUserData(this.uid);
             Firestore _db = Firestore.instance;
             _db
                 .collection("user")
