@@ -86,8 +86,12 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
+    if(mounted){
+      setState(() {
+
+      });
+    }
   }
 
   @override

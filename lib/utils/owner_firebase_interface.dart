@@ -17,6 +17,9 @@ abstract class OwnerFirebaseInterface {
   /// Extract download link of profile image from storage bucket
   Future<String> getDownloadUrlProfilePicture(String userUid);
 
+  /// Extract download link of home images from storage bucket
+  Future<String> getHomeUrl(String uid, int photo_number);
+
   /// Upload residence pictures to firebase collection
   /// Format is : homeImages/${uid}_home_${i.toString()}
   /// Returns true on complete.

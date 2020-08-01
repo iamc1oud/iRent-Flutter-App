@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rent_app/const.dart';
+import 'package:ripple_effect/ripple_effect.dart';
 import 'custom_map_user_card.dart';
 
 class CustomMapUserMarker extends StatelessWidget {
@@ -9,22 +10,31 @@ class CustomMapUserMarker extends StatelessWidget {
 
   const CustomMapUserMarker({Key key, this.imageUrl, this.docId}) : super(key: key);
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      transitionDuration: Duration(milliseconds: 600),
+      pageBuilder: (context, animation, secondaryAnimation) => CustomMapUserCard(
+        uid: this.docId,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.fastLinearToSlowEaseIn;
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: () {
-        // showDialog(
-        //   barrierDismissible: true,
-        //   context: context,
-        //   builder: (context) {
-        //     print("Doing working");
-        //     return CustomMapUserCard();
-        //   },
-        // );
-
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CustomMapUserCard(
-          uid: this.docId,
-        )));
+        Navigator.push(context, _createRoute());
       },
       child: Container(
           decoration: BoxDecoration(

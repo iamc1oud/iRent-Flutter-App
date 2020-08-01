@@ -183,7 +183,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
               onPressed: () async {
                 print(widget.userData["uid"]);
                 String profileUrl = await ownerFirebaseOperation.profilePictureUrl(images[0], widget.userData["uid"]);
-                String profilePictureDownloadUrl =
+                String dpDownloadUrl =
                     await ownerFirebaseOperation.getDownloadUrlProfilePicture(widget.userData["uid"]);
                 print("Uploaded profile picture: " + profileUrl);
 
@@ -193,11 +193,14 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                     longitude: locationData["position"]["longitude"],
                     locality: locationData["locality"],
                     subLocality: locationData["subLocality"],
-                    profilePictureDownloadUrl: profilePictureDownloadUrl,
+                    profilePictureDownloadUrl: dpDownloadUrl,
                     profileUrl: profileUrl);
 
+                print("updating registration profile");
                 await ownerFirebaseOperation.updateRegistrationProfile(
                     model.toJson(), widget.userData["uid"], widget.userType);
+
+                print("Uploading home pictures");
                 await ownerFirebaseOperation.uploadHomePicture(homeImages, widget.userData["uid"]);
 
                 print("Operation:::: Updating location collection with following parameters:");
@@ -218,7 +221,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   'longitude': locationData["position"]["longitude"],
                   'locality': locationData["locality"],
                   'subLocality': locationData["subLocality"],
-                  'profilePictureDownloadUrl': profilePictureDownloadUrl,
+                  'profilePictureDownloadUrl': dpDownloadUrl,
                   'profileUrl': profileUrl
                 });
 
@@ -395,7 +398,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
               ),
             ),
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.all(8.0),
             child: Material(
               borderRadius: BorderRadius.circular(20),
@@ -409,7 +412,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                 ),
               ),
             ),
-          )
+          )*/
         ],
       ),
     );

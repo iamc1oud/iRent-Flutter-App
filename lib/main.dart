@@ -32,20 +32,14 @@ main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserDataProvider() ,
-        )
-      ],
-      child: MaterialApp(
+    return  MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
             snackBarTheme: SnackBarThemeData(backgroundColor: AppStyle().secondaryTextColor),
             primaryColor: Colors.indigo,
             secondaryHeaderColor: Colors.black),
         home: SplashScreen(),
-      ),
+
     );
   }
 }
