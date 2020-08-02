@@ -51,8 +51,7 @@ dependencies:
   proj4dart: ^1.0.4
   geo_firestore: ^0.0.1
   location:
-  ripple_effect: ^0.1.1
-
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

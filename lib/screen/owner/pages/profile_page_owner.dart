@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent_app/components/custom_information_card.dart';
-import 'package:rent_app/screen/auth/components/tab_bar.dart';
+import 'package:rent_app/const.dart';
 
 Widget profileWidget({String profileUrl, String firstname, String lastname}) {
+  PageController _pageController = new PageController(viewportFraction: 0.98, );
   return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Column(children: <Widget>[
@@ -12,22 +13,38 @@ Widget profileWidget({String profileUrl, String firstname, String lastname}) {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: new CircleAvatar(maxRadius: 30, minRadius: 30, backgroundImage: NetworkImage(profileUrl)),
+              padding: const EdgeInsets.only(left:18.0, right: 18),
+              child: new CircleAvatar(
+                  maxRadius: 30,
+                  minRadius: 30,
+                  backgroundImage: NetworkImage(profileUrl)),
             ),
             new Text(
               firstname + " " + lastname,
-              style: new TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: Constants().headingTextStyle,
             ),
           ],
         ),
         Expanded(
-          child: TabBarComponent(
-            tabLength: 2,
-            tabs: ["Personal", "Contact"],
-            tabViews: <Widget>[
-              tabBarPersonalWidget(),
-              tabBarContactWidget(),
+          child: PageView(
+            controller: _pageController,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Material(
+                    shadowColor: Colors.white60,
+                    borderRadius: BorderRadius.circular(10),
+                    elevation: 5,
+                    child: tabBarPersonalWidget()),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Material(
+                    shadowColor: Colors.white60,
+                    borderRadius: BorderRadius.circular(10),
+                    elevation: 5,
+                    child: tabBarContactWidget()),
+              )
             ],
           ),
         ),
@@ -36,18 +53,27 @@ Widget profileWidget({String profileUrl, String firstname, String lastname}) {
 
 Widget tabBarPersonalWidget() {
   return Padding(
-    padding: const EdgeInsets.all(18.0),
+    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
     child: ListView(
       physics: BouncingScrollPhysics(),
       children: <Widget>[
+        new Text("Profile", style: Constants().extraLargeHeadingTextStyle,),
+        new Divider(
+          color: Colors.blue,
+          thickness: 1.5,
+        ),
         CustomInfoCard(
           heading: "Name",
-          data: "Ajay Kumar Singh",
+          data: "IamCloud Dev",
         ),
         CustomInfoCard(
           heading: "Address",
           data: "SMQ 101 D AFS Arjangarh",
-        )
+        ),
+        CustomInfoCard(
+          heading: "Bio",
+          data: "Live Life For A Purpose ✨\nLearn something new everyday 📕\nLove to create 👨‍💻\nDeveloper 💯P.S. I also ❤ gaming.Other IG: @iamajju._",
+        ),
       ],
     ),
   );
@@ -56,10 +82,15 @@ Widget tabBarPersonalWidget() {
 Widget tabBarContactWidget() {
   String phoneNumber;
   return Padding(
-    padding: const EdgeInsets.all(18.0),
+    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
     child: ListView(
       physics: BouncingScrollPhysics(),
       children: <Widget>[
+        new Text("Contact", style: Constants().extraLargeHeadingTextStyle,),
+        new Divider(
+          color: Colors.blue,
+          thickness: 1.5,
+        ),
         CustomInfoCard(
           heading: "Email",
           data: "ajay@gmail.com",

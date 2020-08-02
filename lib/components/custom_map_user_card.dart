@@ -20,11 +20,10 @@ class CustomMapUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: UserDataProvider().getUserData(uid),
       builder: (context, snapshot) {
-        switch(snapshot.connectionState){
+        switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return placeholderWidget(context);
             break;
@@ -33,77 +32,59 @@ class CustomMapUserCard extends StatelessWidget {
             return Scaffold(
                 floatingActionButton: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FloatingActionButton(
-                    onPressed: (){
-                      print("Call person");
-                    },
-                    child: new Icon(Icons.call),
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          print("Call person");
+                        },
+                        child: new Icon(Icons.call),
+                      ),
+                    ),
                   ),
                 ),
-                body:  Padding(
+                body: Padding(
                     padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
                       children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            new Text(
-                              data["firstname"],
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "RobotoSlab"),
-                            ),
+                            new Text(data["firstname"],
+                                style: Constants().extraLargeHeadingTextStyle),
                             new CircleAvatar(
-                              backgroundImage:
-                              NetworkImage(Constants().defaultImageUrl),
+                              backgroundImage: NetworkImage(
+                                  data["profilePictureDownloadUrl"]),
                             )
                           ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: new Text(
-                            "Gallery",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "RobotoSlab"),
-                          ),
+                          child: new Text("Gallery",
+                              style: Constants().headingTextStyle),
                         ),
                         galleryWidget(context, data["homeImagesUrl"]),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: new Text("Email Id",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "RobotoSlab")),
+                              style: Constants().headingTextStyle),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: new Text(data["email"],
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                  fontFamily: "RobotoSlab")),
-                        ),
+                        new Text(data["email"],
+                            style: Constants().normalTextStyle),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: new Text("Address",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "RobotoSlab")),
+                              style: Constants().headingTextStyle),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            placeHolderNameWidget(),
-                            new SizedBox(
-                              height: 5,
-                            ),
-                            placeHolderNameSecondaryWidget()
+                            new Text(
+                                "SMQ 101 D, AFS Arjangarh, New Delhi - 110047",
+                                style: Constants().normalTextStyle),
                           ],
                         ),
                       ],
@@ -121,7 +102,7 @@ class CustomMapUserCard extends StatelessWidget {
     );
   }
 
-  Widget placeholderWidget(BuildContext context){
+  Widget placeholderWidget(BuildContext context) {
     return Material(
       child: Padding(
         padding: const EdgeInsets.all(18.0),
@@ -182,7 +163,7 @@ class CustomMapUserCard extends StatelessWidget {
     return Container(
       height: MediaQuery.of(ctx).size.height * 0.5,
       child: ListView.builder(
-        physics: BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: urls.length,
           itemBuilder: (context, pos) {
@@ -191,11 +172,9 @@ class CustomMapUserCard extends StatelessWidget {
               child: Container(
                 width: 180,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(urls[pos])
-                )),
+                        fit: BoxFit.cover, image: NetworkImage(urls[pos]))),
               ),
             );
           }),

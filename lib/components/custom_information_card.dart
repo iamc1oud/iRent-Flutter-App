@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rent_app/const.dart';
 
 class CustomInfoCard extends StatelessWidget {
   final String heading;
@@ -17,18 +18,28 @@ class CustomInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new Text(
-            this.heading,
-            style: TextStyle(fontFamily: "RobotoSlab", fontWeight: FontWeight.bold, fontSize: 18),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               new Text(
-                this.data,
-                style: TextStyle(fontFamily: "RobotoSlab", fontSize: 16),
+                this.heading,
+                style: Constants().headingTextStyle,
               ),
-              new CupertinoButton(child: new Icon(Icons.edit), onPressed: () {})
+              new IconButton(
+                onPressed: (){
+                  print("Edit button clicked");
+              }, icon: new Icon(Icons.edit, color: Colors.grey,),)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: new Text(
+                  this.data,
+                  style: Constants().normalTextStyle,
+                ),
+              ),
             ],
           ),
         ],

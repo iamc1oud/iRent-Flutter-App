@@ -107,7 +107,6 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
     ];
 
     userLocationOptions = UserLocationOptions(
-        showMoveToCurrentLocationFloatingActionButton: true,
         context: context,
         updateMapLocationOnPositionChange: false,
         mapController: mapController,

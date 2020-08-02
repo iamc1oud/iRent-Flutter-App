@@ -34,7 +34,6 @@ class _OwnerHomeState extends State<OwnerHome> {
     return PersistentTabView(
       screens: _buildScreens(),
       items: _navBarsItems(),
-
       confineInSafeArea: true,
       backgroundColor: Color(0xfff8f8ff),
       handleAndroidBackButtonPress: true,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rent_app/const.dart';
-import 'package:ripple_effect/ripple_effect.dart';
 import 'custom_map_user_card.dart';
 
 class CustomMapUserMarker extends StatelessWidget {
