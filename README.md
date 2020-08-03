@@ -7,7 +7,7 @@ You can build and run this app by yourself. You'll need [Git](https://git-scm.co
 First of all, clone this project by running command:
 
 ```
-$ git clone https://github.com/giantsol/Blue-Diary.git
+$ git clone https://github.com/AjjuSingh/Tenant-App.git
 ```
 
 Open cloned directory with Android Studio and it'll notify you to run `Packages get` to install dependencies. Do that.
