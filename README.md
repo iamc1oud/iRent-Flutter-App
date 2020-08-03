@@ -1,4 +1,4 @@
-<b>iRent</b>
+<h1>iRent</h1>
 
 <img src = "Final template.png"/>
 
