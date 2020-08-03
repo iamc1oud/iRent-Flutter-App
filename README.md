@@ -1,3 +1,5 @@
+<b>iRent</b>
+
 <img src = "Final template.png"/>
 
 ## Usage
