@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_app/components/custom_information_card.dart';
 import 'package:rent_app/const.dart';
+import 'package:rent_app/providers/theme_provider.dart';
 
 Widget profileWidget({String profileUrl, String firstname, String lastname}) {
   PageController _pageController = new PageController(viewportFraction: 0.98, );
+
   return Padding(
       padding: const EdgeInsets.only(top: 20.0),
-      child: Column(children: <Widget>[
+      child: Column(
+          children: <Widget>[
         Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,17 +34,15 @@ Widget profileWidget({String profileUrl, String firstname, String lastname}) {
             controller: _pageController,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(22.0),
                 child: Material(
-                    shadowColor: Colors.white60,
                     borderRadius: BorderRadius.circular(10),
                     elevation: 5,
                     child: tabBarPersonalWidget()),
               ),
               Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: const EdgeInsets.all(22.0),
                 child: Material(
-                    shadowColor: Colors.white60,
                     borderRadius: BorderRadius.circular(10),
                     elevation: 5,
                     child: tabBarContactWidget()),
@@ -53,7 +55,7 @@ Widget profileWidget({String profileUrl, String firstname, String lastname}) {
 
 Widget tabBarPersonalWidget() {
   return Padding(
-    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+    padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 18),
     child: ListView(
       physics: BouncingScrollPhysics(),
       children: <Widget>[
@@ -82,7 +84,7 @@ Widget tabBarPersonalWidget() {
 Widget tabBarContactWidget() {
   String phoneNumber;
   return Padding(
-    padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+    padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 18),
     child: ListView(
       physics: BouncingScrollPhysics(),
       children: <Widget>[

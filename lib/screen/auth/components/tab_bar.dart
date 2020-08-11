@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rent_app/providers/theme_provider.dart';
 import 'package:rent_app/style.dart';
 
 class TabBarComponent extends StatelessWidget {
@@ -14,15 +16,15 @@ class TabBarComponent extends StatelessWidget {
   }
 
   Widget body(context) {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
     return DefaultTabController(
       length: this.tabLength,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(4000),
           child: Container(
             height: 70,
-            decoration: containerDecoration(),
+            decoration: containerDecoration(themeProvider),
             child: tabBarComponent(),
           ),
         ),
@@ -31,16 +33,16 @@ class TabBarComponent extends StatelessWidget {
     );
   }
 
-  Decoration containerDecoration() {
+  Decoration containerDecoration(ThemeProvider provider) {
     return BoxDecoration(
-      color: Colors.white,
+      color: provider.isLightTheme ? Colors.white : AppStyle().darkColor ,
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(25),
         bottomRight: Radius.circular(25),
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.10),
+          color: Colors.black.withOpacity(0.5),
           blurRadius: 16,
           offset: Offset(0, 4),
         )

@@ -52,6 +52,7 @@ dependencies:
   geo_firestore: ^0.0.1
   location:
   google_fonts:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

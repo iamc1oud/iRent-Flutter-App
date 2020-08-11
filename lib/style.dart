@@ -4,6 +4,7 @@ class AppStyle {
   final Color secondaryTextColor = Colors.indigo;
   final Color headingBackgroundColor = Colors.indigo[400];
   final Color primaryTextColor = Colors.white;
+  final Color darkColor = Color(0xFF26242e);
 }
 
 class AppTextStyle {

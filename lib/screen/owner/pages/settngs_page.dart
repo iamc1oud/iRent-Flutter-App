@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_firestore/geo_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/const.dart';
 import 'package:rent_app/models/location_model.dart';
+import 'package:rent_app/providers/theme_provider.dart';
 import 'package:rent_app/screen/auth/auth.dart';
 import 'package:rent_app/screen/splash_screen.dart';
 
@@ -27,6 +29,7 @@ class SettingWidget extends StatelessWidget {
   TextStyle textStyle = GoogleFonts.oxygen();
 
   Widget settingsWidget(BuildContext ctx) {
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -50,7 +53,7 @@ class SettingWidget extends StatelessWidget {
         ),
         new SizedBox(height: 50,),
         notificationButton(),
-        darkModeButton(),
+        darkModeButton(ctx),
         shareLocationButton(),
         Divider(
           endIndent: 20,
@@ -63,7 +66,9 @@ class SettingWidget extends StatelessWidget {
   }
 
   // Dark mode button
-  Widget darkModeButton() {
+  Widget darkModeButton(BuildContext ctx) {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(ctx);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 60),
       child: Row(
@@ -83,9 +88,10 @@ class SettingWidget extends StatelessWidget {
             ],
           ),
           Switch(
-              value: false,
+              value: !themeProvider.isLightTheme,
               onChanged: (val) {
                 print(val);
+                themeProvider.toggleThemeData();
               })
         ],
       ),

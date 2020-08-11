@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:rent_app/style.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  bool isLightTheme;
+  bool isLightTheme = true;
 
   ThemeProvider({
     this.isLightTheme
@@ -17,11 +18,19 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData themeData() {
     return ThemeData(
-      visualDensity: VisualDensity.adaptivePlatformDensity,
       primarySwatch: isLightTheme ? Colors.grey : Colors.grey,
-      primaryColor: isLightTheme ? Colors.white : Color(0xFF1E1F28),
+      primaryColor: isLightTheme ? Colors.grey : Color(0xFF1E1F28),
       brightness: isLightTheme ? Brightness.light : Brightness.dark,
+      accentColor: isLightTheme ? Color(0xFF26242e) : Color(0xFFFFFFFF),
       backgroundColor: isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF26242e),
+      floatingActionButtonTheme: isLightTheme ? FloatingActionButtonThemeData(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white
+      ):FloatingActionButtonThemeData(
+        backgroundColor: Colors.white,
+        elevation: 5,
+        foregroundColor: Colors.black
+      ),
       scaffoldBackgroundColor:
       isLightTheme ? Color(0xFFFFFFFF) : Color(0xFF26242e),
     );
@@ -46,8 +55,8 @@ class ThemeProvider extends ChangeNotifier {
               offset: Offset(0, 5)),
         if (!isLightTheme)
           BoxShadow(
-              color: Color(0x66000000),
-              spreadRadius: 5,
+              //color: Color(0x66000000),
+              spreadRadius: 2,
               blurRadius: 10,
               offset: Offset(0, 5))
       ],

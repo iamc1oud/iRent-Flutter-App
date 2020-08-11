@@ -44,9 +44,6 @@ class _AuthViewsState extends State<AuthViews> {
   Widget loginView(BuildContext ctx) {
     firebaseRepository.setContext(ctx);
 
-    // Controller for field username and password
-
-    // Return Form widget
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -65,9 +62,11 @@ class _AuthViewsState extends State<AuthViews> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8),
           child: new TextFormField(
             controller: usernameController,
-            cursorColor: Colors.deepOrange,
+            cursorColor: Colors.black,
             decoration: InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide()),
+                border: OutlineInputBorder(borderSide: BorderSide(
+
+                )),
                 hintText: "someone@gmail.com",
                 labelText: "Email",
                 alignLabelWithHint: true,
@@ -81,7 +80,8 @@ class _AuthViewsState extends State<AuthViews> {
             cursorColor: Colors.deepOrange,
             obscureText: true,
             decoration: InputDecoration(
-                border: OutlineInputBorder(borderSide: BorderSide()),
+                border: OutlineInputBorder(borderSide: BorderSide(
+                )),
                 labelText: "Password",
                 alignLabelWithHint: true,
                 contentPadding: EdgeInsets.all(8.0)),

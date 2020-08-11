@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
+import 'package:rent_app/providers/theme_provider.dart';
 import 'package:rent_app/screen/map_renderer/nearby_map.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
 import 'package:rent_app/screen/owner/pages/settngs_page.dart';
+import 'package:rent_app/style.dart';
 import 'package:rent_app/utils/owner_firebase_operation.dart';
 
 class OwnerHome extends StatefulWidget {
@@ -31,11 +34,12 @@ class _OwnerHomeState extends State<OwnerHome> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider provider = Provider.of<ThemeProvider>(context);
     return PersistentTabView(
       screens: _buildScreens(),
-      items: _navBarsItems(),
+      items: _navBarsItems(provider),
       confineInSafeArea: true,
-      backgroundColor: Color(0xfff8f8ff),
+      backgroundColor: provider.isLightTheme ? Colors.white: AppStyle().darkColor,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears.
@@ -55,8 +59,8 @@ class _OwnerHomeState extends State<OwnerHome> {
       screenTransitionAnimation: ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
-        curve: Curves.fastLinearToSlowEaseIn,
-        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+        duration: Duration(milliseconds: 250),
       ),
       navBarStyle:
           NavBarStyle.style16, // Choose the nav bar style with this property.
@@ -83,28 +87,28 @@ class _OwnerHomeState extends State<OwnerHome> {
     ];
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
+  List<PersistentBottomNavBarItem> _navBarsItems(ThemeProvider provider) {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Profile"),
-        activeColor: CupertinoColors.activeBlue,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: provider.isLightTheme ? Colors.blue: Colors.white,
+        inactiveColor: provider.isLightTheme ? Colors.grey: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
           CupertinoIcons.location_solid,
-          color: Colors.white,
+          color: provider.isLightTheme ? Colors.white : Colors.black,
         ),
         title: ("Nearby"),
-        activeColor: CupertinoColors.activeBlue,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: provider.isLightTheme ? Colors.blue: Colors.white,
+        inactiveColor: provider.isLightTheme ? Colors.grey: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.settings),
         title: ("Settings"),
-        activeColor: CupertinoColors.activeBlue,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: provider.isLightTheme ? Colors.blue: Colors.white,
+        inactiveColor: provider.isLightTheme ? Colors.grey: Colors.grey,
       ),
     ];
   }

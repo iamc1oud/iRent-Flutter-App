@@ -5,12 +5,10 @@ import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:rent_app/providers/CardDetailProvider.dart';
 import 'package:rent_app/providers/theme_provider.dart';
-import 'package:rent_app/screen/homescreen/home.dart';
 import 'package:rent_app/screen/splash_screen.dart';
-import 'package:rent_app/style.dart';
 
 var _assetsToPreLoad = [AssetFlare(bundle: rootBundle, name: "assets/flare_animations/house.flr")];
 
@@ -20,10 +18,11 @@ Future<void> warmupFlare() async {
   }
 }
 
-main() async {
+Future<void> main() async {
   // TODO: Implement shared preferences for theme settings
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.init(Directory.current.path);
+  Directory appDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDirectory.path);
 
   final settings = await Hive.openBox("settings");
   bool isLightTheme = settings.get("isLightTheme") ?? false;
@@ -67,10 +66,6 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return  MaterialApp(
         debugShowCheckedModeBanner: false,
-        /*theme: new ThemeData(
-            snackBarTheme: SnackBarThemeData(backgroundColor: AppStyle().secondaryTextColor),
-            primaryColor: Colors.indigo,
-            secondaryHeaderColor: Colors.black),*/
         theme: widget.themeProvider.themeData(),
         home: SplashScreen(),
     );
