@@ -279,12 +279,6 @@ class _AuthViewsState extends State<AuthViews> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
-                  var user = await firebaseRepository.registerUser(
-                      firstName: firstNameController.text,
-                      lastName: lastNameController.text,
-                      email: emailController.text,
-                      password: passwordSignUpController.text,
-                      isOwnerorGuest: _userStatus);
 
                   /*if (user != null && _userStatus == "user_landlord") {
                     Navigator.push(

@@ -1,4 +1,3 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,11 +6,9 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_app/providers/theme_provider.dart';
 import 'package:rent_app/screen/map_renderer/nearby_map.dart';
-import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
 import 'package:rent_app/screen/owner/pages/settngs_page.dart';
 import 'package:rent_app/style.dart';
-import 'package:rent_app/utils/owner_firebase_operation.dart';
 
 class OwnerHome extends StatefulWidget {
   final Map<String, dynamic> currentUserData;

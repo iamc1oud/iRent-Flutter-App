@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geo_firestore/geo_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart' as locationpackage;
 import 'package:location/location.dart';
-import 'package:rent_app/components/custom_map_user_card.dart';
 import 'package:user_location/user_location.dart';
 
 class MapBoxScreen extends StatefulWidget {

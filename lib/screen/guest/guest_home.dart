@@ -1,4 +1,3 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +7,6 @@ import 'package:rent_app/geolocator_api/geolocator_provider.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
 import 'package:rent_app/screen/owner/pages/settngs_page.dart';
-import 'package:rent_app/utils/owner_firebase_operation.dart';
 
 class GuestHomeScreen extends StatefulWidget {
   final Map<String, dynamic> currentUserData;

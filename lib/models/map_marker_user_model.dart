@@ -10,7 +10,6 @@ class MapMarkerUserModel {
   MapMarkerUserModel({this.name, this.imageUrl, this.galleryPhotos, this.emailId, this.address});
 
   factory MapMarkerUserModel.fromFirestore(DocumentSnapshot doc){
-    Map data = doc.data;
 
     return MapMarkerUserModel(
 

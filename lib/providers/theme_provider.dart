@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:rent_app/style.dart';
 
 class ThemeProvider extends ChangeNotifier {
   bool isLightTheme = true;

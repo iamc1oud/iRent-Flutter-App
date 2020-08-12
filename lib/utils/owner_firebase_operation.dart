@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:geo_firestore/geo_firestore.dart';
-import 'package:rent_app/models/map_marker_user_model.dart';
 import 'package:rent_app/utils/owner_firebase_interface.dart';
 
 class OwnerFirebaseOperation extends OwnerFirebaseInterface {
@@ -110,13 +108,10 @@ class OwnerFirebaseOperation extends OwnerFirebaseInterface {
   }
 
   @override
-  Stream<MapMarkerUserModel> streamMapMarkerUserModel(String uid) {}
-
-  @override
-  Future<String> getHomeUrl(String uid, int photo_number) async {
+  Future<String> getHomeUrl(String uid, int photoNumber) async {
     StorageReference storageReference = FirebaseStorage()
         .ref()
-        .child("homeImages/${uid}_home_${photo_number.toString()}.png");
+        .child("homeImages/${uid}_home_${photoNumber.toString()}.png");
     var link = await storageReference.getDownloadURL();
     return link;
   }

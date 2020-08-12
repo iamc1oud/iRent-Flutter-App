@@ -30,8 +30,8 @@ class FirebaseRepository extends FirebaseHandlers {
   }
 
   @override
+  // ignore: missing_return
   Future<FirebaseUser> loginUser({String email, String password}) async {
-    bool successfulLogin = false;
 
     /*`ERROR_INVALID_EMAIL` - If the email address is malformed.
     `ERROR_WRONG_PASSWORD` - If the password is wrong.
@@ -71,6 +71,7 @@ class FirebaseRepository extends FirebaseHandlers {
   }
 
   @override
+  // ignore: missing_return
   Future<FirebaseUser> registerUser(
       {String firstName,
       String lastName,

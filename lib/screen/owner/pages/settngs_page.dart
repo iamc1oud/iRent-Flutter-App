@@ -1,18 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_firestore/geo_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/const.dart';
-import 'package:rent_app/models/location_model.dart';
 import 'package:rent_app/providers/theme_provider.dart';
-import 'package:rent_app/screen/auth/auth.dart';
 import 'package:rent_app/screen/splash_screen.dart';
+
 
 class SettingWidget extends StatelessWidget {
   @required

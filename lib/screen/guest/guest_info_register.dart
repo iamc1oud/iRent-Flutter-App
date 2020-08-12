@@ -1,15 +1,10 @@
 import 'dart:io';
 import 'package:christian_picker_image/christian_picker_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
 import 'package:rent_app/geolocator_api/geolocator_provider.dart';
 import 'package:rent_app/models/guest_model.dart';
-import 'package:rent_app/models/owner_model.dart';
 import 'package:rent_app/screen/guest/guest_home.dart';
-import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/style.dart';
 import 'package:rent_app/utils/owner_firebase_operation.dart';
 

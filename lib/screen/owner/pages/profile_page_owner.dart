@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rent_app/components/custom_information_card.dart';
 import 'package:rent_app/const.dart';
-import 'package:rent_app/providers/theme_provider.dart';
 
 Widget profileWidget({String profileUrl, String firstname, String lastname}) {
   PageController _pageController = new PageController(viewportFraction: 0.98, );
