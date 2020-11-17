@@ -35,7 +35,7 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
 
   initLocationService() async{
     await _location.changeSettings(
-      accuracy: locationpackage.LocationAccuracy.HIGH,
+      accuracy: locationpackage.LocationAccuracy.high,
       interval: 1000
     );
 
@@ -47,11 +47,11 @@ class _MapBoxScreenState extends State<MapBoxScreen> {
       serviceEnabled = await _location.serviceEnabled();
       if(serviceEnabled){
         var permission = await _location.requestPermission();
-        _permission = permission == locationpackage.PermissionStatus.GRANTED;
+        _permission = permission == locationpackage.PermissionStatus.granted;
         if(_permission){
           location = await _location.getLocation();
           _currentLocation = location;
-          _location.onLocationChanged().listen((locationpackage.LocationData result) async{
+          _location.onLocationChanged.listen((locationpackage.LocationData result) async{
             if(mounted){
               setState(() {
                 _currentLocation = result;

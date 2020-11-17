@@ -19,15 +19,19 @@ Future<void> warmupFlare() async {
 }
 
 Future<void> main() async {
-  // TODO: Implement shared preferences for theme settings
+  // Initializing [WidgetsFlutterBinding]
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialization of [Hive]
   Directory appDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDirectory.path);
-
   final settings = await Hive.openBox("settings");
+
+  // If [isLightTheme] is null set to false
   bool isLightTheme = settings.get("isLightTheme") ?? false;
   print("Light theme enabled: " + isLightTheme.toString());
 
+  // Removing the status bar display
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
   FlareCache.doesPrune = false;
 

@@ -295,6 +295,7 @@ class _AuthViewsState extends State<AuthViews> {
                                   userType: _userStatus,
                                 )));
                   }*/
+                  await firebaseRepository.registerUser(firstName: firstNameController.text, lastName: lastNameController.text, email: emailController.text, isOwnerorGuest: _userStatus, password: passwordSignUpController.text);
                 },
                 child: new Text(
                   "Submit",
