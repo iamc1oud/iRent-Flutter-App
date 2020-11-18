@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:christian_picker_image/christian_picker_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:progress_timeline/progress_timeline.dart';
 import 'package:rent_app/geolocator_api/geolocator_provider.dart';
 import 'package:rent_app/models/owner_model.dart';
 import 'package:rent_app/style.dart';
@@ -39,6 +40,12 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
 
   // Store current position of user during registration
   Position currentPosition;
+
+  List<SingleState> allstages = [
+    SingleState(stateTitle: "Profile"),
+    SingleState(stateTitle: "Upload"),
+    SingleState(stateTitle: "Verification")
+  ];
 
   void takeImage(BuildContext context) async {
     images = await ChristianPickerImage.pickImages(maxImages: 1);
@@ -79,10 +86,9 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     print(widget.userData);
     getLocation();
+    super.initState();
   }
 
   getLocation() async {
@@ -101,12 +107,11 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
               padding: EdgeInsets.only(left: 30.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
-              child: new Row(
+              child: new Column(
                 children: <Widget>[
                   Expanded(
-                    child: new Column(
+                    child: new Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         RichText(
                           text: TextSpan(children: [
@@ -116,7 +121,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                                     fontSize: 35,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: "RobotoSlab",
-                                    color: Colors.black)),
+                                    color: Theme.of(context).primaryColor)),
                           ]),
                         ),
                       ],
@@ -124,7 +129,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   )
                 ],
               )),
-          preferredSize: Size.fromHeight(70)),
+          preferredSize: Size.fromHeight(60)),
       body: isLocationLoading
           ? Center(
               child: new FittedBox(
@@ -157,9 +162,9 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   child: Container(
                       margin: EdgeInsets.only(bottom: 30),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFFFF2366),
-                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
+                        borderRadius: BorderRadius.circular(10),
+                        //color: Color(0xFFFF2366),
+                      ),
                       child: uploadProfilePictureWidget()),
                 ),
                 Padding(
@@ -167,9 +172,9 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   child: Container(
                       margin: EdgeInsets.only(bottom: 30),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xFF006AAE),
-                          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), spreadRadius: 2, blurRadius: 5)]),
+                        borderRadius: BorderRadius.circular(20),
+                        //color: Color(0xFF006AAE),
+                      ),
                       child: uploadHomeImages()),
                 )
               ],
@@ -252,7 +257,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
           children: <Widget>[
             new Text(
               "Residence picture",
-              style: AppTextStyle().cardHeadingPrimaryStyle,
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
             ),
             homeImageUploaded
                 ? Expanded(
@@ -275,31 +280,22 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                   )
                 : Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Material(
-                      elevation: 10,
-                      shadowColor: Color(0xFF006AAE),
-                      borderRadius: BorderRadius.circular(20),
-                      child: new Container(
-                        height: size.height * 0.25,
-                        width: size.width * 0.33,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Icon(
-                              Icons.photo_camera,
-                              color: Colors.white,
-                            ),
-                            new Text(
-                              "Upload picture",
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                            color: Color(0xFF006AAE),
-                            boxShadow: [BoxShadow(color: Colors.blue.withOpacity(0.5), blurRadius: 2, spreadRadius: 1)],
-                            borderRadius: BorderRadius.circular(20)),
+                    child: new Container(
+                      height: size.height * 0.25,
+                      width: size.width * 0.33,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Icon(
+                            Icons.photo_camera,
+                          ),
+                          new Text(
+                            "Upload picture",
+                            style: TextStyle(color: Theme.of(context).primaryColorDark),
+                          )
+                        ],
                       ),
+                      decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
                     ),
                   ),
           ],
@@ -314,7 +310,7 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
       padding: const EdgeInsets.all(24.0),
       child: ListView(
         children: <Widget>[
-          new Text("Upload profile picture", style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Upload profile picture", style: TextStyle(color: Theme.of(context).primaryColorDark)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
@@ -342,23 +338,19 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                           children: <Widget>[
                             new Icon(
                               Icons.photo_camera,
-                              color: Colors.white,
                             ),
                             new Text(
                               "Upload picture",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Theme.of(context).primaryColorDark),
                             )
                           ],
                         ),
-                        decoration: BoxDecoration(
-                            color: Color(0xFFFF2366),
-                            boxShadow: [BoxShadow(color: Colors.pink, spreadRadius: 2, blurRadius: 10)],
-                            borderRadius: BorderRadius.circular(20)),
+                        decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
             ),
           ),
-          new Text("Current location", style: AppTextStyle().cardHeadingPrimaryStyle),
+          new Text("Current location", style: TextStyle(color: Theme.of(context).primaryColorDark)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
@@ -367,20 +359,15 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    new Text("Country: " + locationData["isoCountryCode"],
+                        style: TextStyle(color: Theme.of(context).primaryColorDark)),
                     new Text(
-                      "Country: " + locationData["isoCountryCode"],
-                      style: AppTextStyle().whiteTextColor,
-                    ),
-                    new Text(
-                      "Sublocality: " + locationData["subLocality"] == ""
-                          ? "Not avaiable"
-                          : locationData["subLocality"],
-                      style: AppTextStyle().whiteTextColor,
-                    ),
-                    new Text(
-                      "Locality: " + locationData["locality"],
-                      style: AppTextStyle().whiteTextColor,
-                    ),
+                        "Sublocality: " + locationData["subLocality"] == ""
+                            ? "Not avaiable"
+                            : locationData["subLocality"],
+                        style: TextStyle(color: Theme.of(context).primaryColorDark)),
+                    new Text("Locality: " + locationData["locality"],
+                        style: TextStyle(color: Theme.of(context).primaryColorDark)),
                     /*new Text(
                       "Latitude: " + locationData["position"]["latitude"].toString(),
                       style: AppTextStyle().whiteTextColor,

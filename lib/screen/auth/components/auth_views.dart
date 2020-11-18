@@ -209,12 +209,7 @@ class _AuthViewsState extends State<AuthViews> {
             child: new TextFormField(
               cursorColor: Colors.deepOrange,
               controller: emailController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "someone@gmail.com",
-                  labelText: "Email",
-                  alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(8.0)),
+              decoration: decorationStyle("Email", "someone@gmail.com"),
             ),
           ),
           Padding(
@@ -223,11 +218,7 @@ class _AuthViewsState extends State<AuthViews> {
               cursorColor: Colors.deepOrange,
               obscureText: true,
               controller: passwordSignUpController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Password",
-                  alignLabelWithHint: true,
-                  contentPadding: EdgeInsets.all(8.0)),
+              decoration: decorationStyle("Password"),
             ),
           ),
           Padding(
@@ -262,7 +253,6 @@ class _AuthViewsState extends State<AuthViews> {
                         setState(() {
                           _userStatus = value;
                         });
-
                         print(value);
                       },
                     ),
@@ -279,22 +269,6 @@ class _AuthViewsState extends State<AuthViews> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
-
-                  /*if (user != null && _userStatus == "user_landlord") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnerInfoRegisterScreen(
-                                  userType: _userStatus,
-                                )));
-                  } else if (user != null && _userStatus == "user_guest") {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GuestInfoRegisterScreen(
-                                  userType: _userStatus,
-                                )));
-                  }*/
                   await firebaseRepository.registerUser(firstName: firstNameController.text, lastName: lastNameController.text, email: emailController.text, isOwnerorGuest: _userStatus, password: passwordSignUpController.text);
                 },
                 child: new Text(
@@ -308,5 +282,17 @@ class _AuthViewsState extends State<AuthViews> {
         ],
       ),
     );
+  }
+
+
+  /// The default [InputDecoration] for input field of sign up and login
+  /// ee
+  InputDecoration decorationStyle(String labelText, [String hintText]){
+    return InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: labelText,
+        hintText: hintText,
+        alignLabelWithHint: true,
+        contentPadding: EdgeInsets.all(8.0));
   }
 }

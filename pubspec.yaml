@@ -39,6 +39,7 @@ dependencies:
   google_fonts:
   path_provider:
   animations: ^1.1.2
+  progress_timeline: ^0.0.5
 
 dev_dependencies:
   flutter_test:
