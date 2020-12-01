@@ -5,9 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:progress_timeline/progress_timeline.dart';
 import 'package:rent_app/geolocator_api/geolocator_provider.dart';
 import 'package:rent_app/models/owner_model.dart';
-import 'package:rent_app/style.dart';
 import 'package:rent_app/utils/owner_firebase_operation.dart';
-
 import 'owner_home.dart';
 
 class OwnerInfoRegisterScreen extends StatefulWidget {
