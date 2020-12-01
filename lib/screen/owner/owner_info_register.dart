@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:christian_picker_image/christian_picker_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:progress_timeline/progress_timeline.dart';
 import 'package:rent_app/geolocator_api/geolocator_provider.dart';
 import 'package:rent_app/models/owner_model.dart';
 import 'package:rent_app/utils/owner_firebase_operation.dart';
@@ -38,12 +37,6 @@ class _OwnerInfoRegisterScreenState extends State<OwnerInfoRegisterScreen> {
 
   // Store current position of user during registration
   Position currentPosition;
-
-  List<SingleState> allstages = [
-    SingleState(stateTitle: "Profile"),
-    SingleState(stateTitle: "Upload"),
-    SingleState(stateTitle: "Verification")
-  ];
 
   void takeImage(BuildContext context) async {
     images = await ChristianPickerImage.pickImages(maxImages: 1);

@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:rent_app/authorization/firebase_repository.dart';
 import 'package:rent_app/screen/guest/guest_home.dart';
 import 'package:rent_app/screen/guest/guest_info_register.dart';
@@ -29,6 +32,10 @@ class _AuthViewsState extends State<AuthViews> {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordSignUpController = new TextEditingController();
   String _userStatus;
+
+  /// [Boolean] to check if the sign in button is pressed. On pressed, show loading
+  /// indicator. Default it's value is false.
+  bool statusOfSignIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +105,12 @@ class _AuthViewsState extends State<AuthViews> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   onPressed: () async {
+                    setState(() {
+                      statusOfSignIn = true;
+                    });
                     var user = await firebaseRepository.loginUser(
                         email: usernameController.text, password: passwordController.text);
+
                     if (user != null) {
                       // Find user in user collection
                       Stream<QuerySnapshot> identity =
@@ -148,11 +159,12 @@ class _AuthViewsState extends State<AuthViews> {
                       });
                     } else {
                       print("Could not sign in");
+                      setState(() {
+                        statusOfSignIn = false;
+                      });
                     }
-                    // Navigate to homescreen
-                    //Navigator.pushReplacementNamed(context, "/homescreen");
                   },
-                  child: new Text(
+                  child: statusOfSignIn ? Loading(indicator: BallBeatIndicator(), size: 30,): new Text(
                     "Sign In",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -269,9 +281,17 @@ class _AuthViewsState extends State<AuthViews> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 onPressed: () async {
+                  /// Changing state of boolean value to true, to [start] loading indicator
+                  setState(() {
+                    statusOfSignIn = true;
+                  });
                   await firebaseRepository.registerUser(firstName: firstNameController.text, lastName: lastNameController.text, email: emailController.text, isOwnerorGuest: _userStatus, password: passwordSignUpController.text);
+                  /// Changing state of boolean value to false, to [stop] show loading indicator
+                  setState(() {
+                    statusOfSignIn = false;
+                  });
                 },
-                child: new Text(
+                child: statusOfSignIn ? Loading(indicator: BallPulseIndicator(), size: 30,): new Text(
                   "Submit",
                   style: TextStyle(color: Colors.white),
                 ),
@@ -286,7 +306,6 @@ class _AuthViewsState extends State<AuthViews> {
 
 
   /// The default [InputDecoration] for input field of sign up and login
-  /// ee
   InputDecoration decorationStyle(String labelText, [String hintText]){
     return InputDecoration(
         border: OutlineInputBorder(),

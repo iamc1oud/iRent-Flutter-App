@@ -366,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  loading:
+    dependency: "direct main"
+    description:
+      name: loading
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   location:
     dependency: "direct main"
     description:
@@ -520,13 +527,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
-  progress_timeline:
-    dependency: "direct main"
-    description:
-      name: progress_timeline
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.5"
   proj4dart:
     dependency: "direct main"
     description:
@@ -555,13 +555,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.23.1"
-  scrollable_positioned_list:
-    dependency: transitive
-    description:
-      name: scrollable_positioned_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.8"
   shimmer:
     dependency: "direct main"
     description:
