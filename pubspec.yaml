@@ -18,7 +18,6 @@ dependencies:
   cloud_firestore:
   flare_flutter:
   firebase_auth:
-  fluttertoast: ^5.0.1
   christian_picker_image: ^0.1.7
   cached_network_image: ^2.2.0+1
   flutter_map:
@@ -40,6 +39,8 @@ dependencies:
   path_provider:
   animations: ^1.1.2
   loading: ^1.0.2
+  razorpay_flutter: ^1.2.2
+  fluttertoast: ^7.1.5
 
 dev_dependencies:
   flutter_test:

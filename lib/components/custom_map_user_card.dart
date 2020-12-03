@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:rent_app/const.dart';
 import 'package:rent_app/providers/CardDetailProvider.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CustomMapUserCard extends StatelessWidget {
+class CustomMapUserCard extends StatefulWidget {
   // We wll need the user uid only to fetch data from firebase
   final String uid;
 
@@ -15,16 +17,56 @@ class CustomMapUserCard extends StatelessWidget {
   const CustomMapUserCard({Key key, this.uid}) : super(key: key);
 
   @override
+  _CustomMapUserCardState createState() => _CustomMapUserCardState();
+}
+
+class _CustomMapUserCardState extends State<CustomMapUserCard> {
+  // Razorpay payment
+  Razorpay _razorpay;
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+
+  @override
+  void dispose() {
+    _razorpay.clear();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId, timeInSecForIosWeb: 4);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message,
+        timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName, timeInSecForIosWeb: 4);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: UserDataProvider().getUserData(uid),
+      future: UserDataProvider().getUserData(widget.uid),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return placeholderWidget(context);
             break;
           case ConnectionState.done:
-            data = snapshot.data.data;
+            CustomMapUserCard.data = snapshot.data.data;
+            print("Data fetched is : " + CustomMapUserCard.data.toString());
             return Scaffold(
                 floatingActionButton: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -32,11 +74,15 @@ class CustomMapUserCard extends StatelessWidget {
                     height: 50,
                     width: 50,
                     child: FittedBox(
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          print("Call person");
-                        },
-                        child: new Icon(Icons.call),
+                      child: Row(
+                        children: [
+                          FloatingActionButton(
+                            onPressed: () {
+                              print("Call person");
+                            },
+                            child: new Icon(Icons.call),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -49,11 +95,11 @@ class CustomMapUserCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            new Text(data["firstname"],
+                            new Text(CustomMapUserCard.data["firstname"],
                                 style: Constants().extraLargeHeadingTextStyle),
                             new CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  data["profilePictureDownloadUrl"]),
+                              backgroundImage: NetworkImage(CustomMapUserCard
+                                  .data["profilePictureDownloadUrl"]),
                             )
                           ],
                         ),
@@ -62,13 +108,14 @@ class CustomMapUserCard extends StatelessWidget {
                           child: new Text("Gallery",
                               style: Constants().headingTextStyle),
                         ),
-                        galleryWidget(context, data["homeImagesUrl"]),
+                        galleryWidget(
+                            context, CustomMapUserCard.data["homeImagesUrl"]),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: new Text("Email Id",
                               style: Constants().headingTextStyle),
                         ),
-                        new Text(data["email"],
+                        new Text(CustomMapUserCard.data["email"],
                             style: Constants().normalTextStyle),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -81,6 +128,32 @@ class CustomMapUserCard extends StatelessWidget {
                             new Text(
                                 "SMQ 101 D, AFS Arjangarh, New Delhi - 110047",
                                 style: Constants().normalTextStyle),
+                            new RaisedButton(
+                              color: Colors.blueAccent,
+                              textColor: Colors.white,
+                              onPressed: () async {
+                                var options = {
+                                  'key': 'rzp_test_1DP5mmOlF5G5ag',
+                                  'amount': 10000 * 100,
+                                  'name': 'Acme Corp.',
+                                  'description': 'Rent',
+                                  'prefill': {
+                                    'contact': '8888888888',
+                                    'email': 'test@razorpay.com'
+                                  },
+                                  'external': {
+                                    'wallets': ['paytm']
+                                  }
+                                };
+
+                                try {
+                                  _razorpay.open(options);
+                                } catch (e) {
+                                  debugPrint(e);
+                                }
+                              },
+                              child: Text("Payment"),
+                            )
                           ],
                         ),
                       ],

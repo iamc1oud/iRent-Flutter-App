@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent_app/geolocator_api/geolocator_provider.dart';
+import 'package:rent_app/screen/map_renderer/nearby_map.dart';
 import 'package:rent_app/screen/owner/map_renderer.dart';
 import 'package:rent_app/screen/owner/pages/profile_page_owner.dart';
 import 'package:rent_app/screen/owner/pages/settngs_page.dart';
@@ -87,7 +88,7 @@ class _GuestHomeScreenState extends State<GuestHomeScreen> {
               "https://static.toiimg.com/photo/72975551.cms"),
       isLoading ?  new CircularProgressIndicator(): Container(
         color: Colors.indigoAccent,
-        child: MapBoxScreen(
+        child: NearbyMapScreen(
           userPosition: currentPosition,
         ),
       ),

@@ -1,0 +1,284 @@
+[33mcommit 65c2498d39ff68833dd14e1611d73d34e54f3e68[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: AjjuSingh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Dec 1 16:42:38 2020 +0530
+
+    added loading indicator
+
+[33mcommit 630fbccc464e1e30f99c7246d9f9d383e9cdca76[m
+Author: AjjuSingh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Dec 1 16:10:34 2020 +0530
+
+    changed loading indicator
+
+[33mcommit dd768d16458acb5797fe26d3ed4a04cef314035d[m
+Author: AjjuSingh <ajaykumar.kumar900@gmail.com>
+Date:   Wed Nov 18 17:24:25 2020 +0530
+
+    ui changes
+
+[33mcommit b5b58887b26603f678e7abcf2008c83f801b5e34[m
+Author: AjjuSingh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Nov 17 13:35:13 2020 +0530
+
+    updated pubspec file
+
+[33mcommit b6ad7408f17623d10e8f1dd82c2fe35da846d7a7[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Wed Aug 12 19:06:40 2020 +0530
+
+    Code refactoring
+
+[33mcommit f739c6b07da685cfb51077d7eb567da1e78b8ecf[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Aug 11 23:42:14 2020 +0530
+
+    Added light and dark theme
+
+[33mcommit 1efdef86d47eca93c567fd7fd3d525d88ffb6e67[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 8 17:55:48 2020 +0530
+
+    update readme:
+
+[33mcommit e6d0a6c7d891f0d9b73a9bab801bb517c9a762e9[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 8 17:54:50 2020 +0530
+
+    update readme
+
+[33mcommit 693e97eef3c39b774ff8942f6e46fc4c936adb24[m
+Merge: be51b27 b1ca44b
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 8 17:53:48 2020 +0530
+
+    Merge branch 'master' of https://github.com/AjjuSingh/Tenant-App
+
+[33mcommit be51b275fe5011e8dfcacb86ce074ae6dba120cb[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 8 17:53:31 2020 +0530
+
+    added hive box
+
+[33mcommit b1ca44ba4f519d2a0842216bc05996c7fde47111[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:30:05 2020 +0530
+
+    Update README.md
+
+[33mcommit 7c5eaf3f9d75757f6d869cd5dbdfec1bf5cf1c23[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:29:45 2020 +0530
+
+    Update README.md
+
+[33mcommit 29f7a0b0c7905a68799a565045d4578076c43bb5[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:29:05 2020 +0530
+
+    Update README.md
+
+[33mcommit 45fcf2bfc813cfdc637d5997992413a243533846[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:28:32 2020 +0530
+
+    Update README.md
+
+[33mcommit b5e17dfd72958971065f8884ce8c47530e8e3b26[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:27:46 2020 +0530
+
+    Update README.md
+
+[33mcommit e2db3ed06450c5e585aaca14505e493a924a5818[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Aug 3 16:25:15 2020 +0530
+
+    Add files via upload
+    
+    Adobe XD app template
+
+[33mcommit 1bfcf831b44a02ce7cf48383a1115a1e4f6c3853[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sun Aug 2 23:06:03 2020 +0530
+
+    commit
+
+[33mcommit 95e45b65f2f9e5396efb9b2bd35dc498eda80746[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 1 15:07:31 2020 +0530
+
+    need to add address and phone number
+
+[33mcommit de9d2be9bc3cc5633243252049618c3387b5baa1[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Aug 1 06:23:44 2020 +0100
+
+    add support RTC
+
+[33mcommit e93ded87c78ddccbca92849972d90fc4d60f52c5[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 31 01:09:40 2020 +0530
+
+    Fixed provider issue
+
+[33mcommit ff87b83c2108b4cf843a97d5224dc721e05451c6[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Wed Jul 29 22:53:27 2020 +0530
+
+    need to implement provider for state management
+
+[33mcommit 3393a9977cec7f54d0e5981a065e40a4d97f50a9[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Wed Jul 29 13:25:39 2020 +0530
+
+    removed redundant code
+
+[33mcommit 33c45d51e42ea5ce21962fc1d60c4b0b64a4ca07[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 28 21:15:57 2020 +0530
+
+    added shimmer animation:
+
+[33mcommit a84677d658336775919160f67d33c52635c0c870[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Jul 27 00:19:02 2020 +0530
+
+    Added markers to map and custom map user card in progress
+
+[33mcommit 6fbf0fc9d4c33ecf475f6f1d2f9f6e9125ff7280[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sun Jul 26 17:08:58 2020 +0530
+
+    Project delay
+
+[33mcommit ddd38e10e937b7ab8dcec64e52d49eae12cca5be[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Jul 25 22:29:04 2020 +0530
+
+    Added geolocation based search
+
+[33mcommit 82bf12115e468e8f0150dd47d28b0731920fb0d0[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Jul 25 19:59:15 2020 +0530
+
+    fix sign up uid error
+
+[33mcommit 8baefeba23c0d5d7fa4e4d3e12e9be20fd6d9fe8[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Thu Jul 23 22:16:02 2020 +0530
+
+    guest home screen added... few tweaks left
+
+[33mcommit 39852352d4d9a0b5ecd1c1117f286ac622dcff3c[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Thu Jul 23 21:01:55 2020 +0530
+
+    Added custom marker
+
+[33mcommit b596fa667b590deff35f5b9949ad1e3b9a793ef9[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 21 21:07:30 2020 +0530
+
+    Added flutter map
+
+[33mcommit 08ee835a4d731ca6e4c8c98b2b62539cc0420037[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 21 19:58:03 2020 +0530
+
+    IIssue solved #https://github.com/AjjuSingh/Tenant-App/issues/1#issue-660289278
+
+[33mcommit 2678e207d5f8a2aa3ecbe97605ce82605c48d37a[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Jul 18 23:29:22 2020 +0530
+
+    Added tabs in profile screen
+
+[33mcommit 3ad85ca77a518afcb0e42b1dae59eac1fdb9e44f[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sat Jul 18 13:53:40 2020 +0530
+
+    added tab view for owner
+
+[33mcommit 8a6133b2fe7cf284e9ee4f267d4bc3ad5e49d39f[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 17 00:13:20 2020 +0530
+
+    Firebase storage of profile picture
+
+[33mcommit 21b332293a50cd856d5d43d9a10f12cfed1d5414[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 14 22:03:55 2020 +0530
+
+    added firebase storage
+
+[33mcommit f31d7d761438382d3f85080323881e27eaa28724[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Jul 13 20:22:53 2020 +0530
+
+    UI improve and added map to profile setup page
+
+[33mcommit e4a922d64ce85741b41def369e2648b25f67d5aa[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Jul 13 18:33:18 2020 +0530
+
+    owner info done
+
+[33mcommit 3666ecff133f9362f49b4fe38c59a7625cd405e0[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 10 22:32:55 2020 +0530
+
+    location registration
+
+[33mcommit fd45c5501a98bb0e40f7ee0efebbf4a5c784f7c3[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Thu Jul 9 17:36:17 2020 +0530
+
+    Added map box to owner
+
+[33mcommit 191ebf814c52e6858f61dfc77b23c5e0881b8e9d[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 7 22:21:13 2020 +0530
+
+    owner and guest homescreen separate
+
+[33mcommit 5042acadd53e03f88f8c1ccb9aa5f678ad0376c9[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Tue Jul 7 12:36:48 2020 +0530
+
+    Added login route to homescreen
+
+[33mcommit 8913064138ca6709c42adeee5f7f0c29f35a471e[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Jul 6 19:25:55 2020 +0530
+
+    Added new field in sign up for checking whether the user is owner or guest
+
+[33mcommit 474af6384ed31525917b520a59b40bb27d7fedb6[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Mon Jul 6 00:19:15 2020 +0530
+
+    Fixed texteditingcontroller issue
+
+[33mcommit 25d21ae13ea252c332c1f27ba5d2b61223823d9b[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Sun Jul 5 23:07:24 2020 +0530
+
+    Firebase auth
+
+[33mcommit ef21e94043634f2fe1d4278c1ef0ba45b9bb1c8d[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 3 23:13:27 2020 +0530
+
+    added auth screen
+
+[33mcommit e53701876cb64d3804e233fe13ab2c727e9d82d6[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 3 20:38:51 2020 +0530
+
+    Added flare animation for splash screen
+
+[33mcommit 03d697a0cc82ed4a4dc61727096bf5301465cfaa[m
+Author: Ajay Kumar Singh <ajaykumar.kumar900@gmail.com>
+Date:   Fri Jul 3 19:46:53 2020 +0530
+
+    first commit
